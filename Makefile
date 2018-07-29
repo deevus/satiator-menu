@@ -21,7 +21,7 @@ OUT_DIR=./build
 
 # Executables
 
-ifeq ($(OS), 'Windows NT')
+ifeq ($(OS), Windows_NT)
 	CC=$(SH_COFF_BIN)/sh-coff-gcc.exe
 	CONV=$(SH_COFF_BIN)/sh-coff-objcopy.exe
 	CUE_MAKER=$(COMPILER_DIR)/TOOLS/JoEngineCueMaker.exe
