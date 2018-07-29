@@ -21,12 +21,19 @@ OUT_DIR=./build
 
 # Executables
 
+ifeq ($(OS), 'Windows NT')
+	CC=$(SH_COFF_BIN)/sh-coff-gcc.exe
+	CONV=$(SH_COFF_BIN)/sh-coff-objcopy.exe
+	CUE_MAKER=$(COMPILER_DIR)/TOOLS/JoEngineCueMaker.exe
+else
+	CC=wine $(SH_COFF_BIN)/sh-coff-gcc.exe
+	CONV=wine $(SH_COFF_BIN)/sh-coff-objcopy.exe
+	CUE_MAKER=wine $(COMPILER_DIR)/TOOLS/JoEngineCueMaker.exe
+endif
+
 MKISOFS=mkisofs
 RM=rm -rf
 MKDIR=mkdir -p
-CC=$(SH_COFF_BIN)/sh-coff-gcc.exe
-CONV=$(SH_COFF_BIN)/sh-coff-objcopy.exe
-CUE_MAKER=$(COMPILER_DIR)/TOOLS/JoEngineCueMaker.exe
 
 # Sources
 
@@ -191,7 +198,7 @@ SYSOBJS =
 
 # remove the comment below when nosgl.linker is fixed
 #ifeq (1,${JO_COMPILE_USING_SGL})
-	SYSOBJS += $(SGLLDR)/sglarea.o
+	SYSOBJS += $(SGLLDR)/SGLAREA.O
 #endif
 
 OBJS = $(SRCS:.c=.o)
@@ -205,7 +212,7 @@ OBJS = $(SRCS:.c=.o)
 #ifeq (1,${JO_COMPILE_USING_SGL})
 	SGLDIR = $(COMPILER_DIR)/SGL_302j
 	SGLIDR = $(SGLDIR)/inc
-	SGLLDR = $(SGLDIR)/lib_coff
+	SGLLDR = $(SGLDIR)/LIB_COFF
 #endif
 
 CMNDIR = $(COMPILER_DIR)/COMMON
