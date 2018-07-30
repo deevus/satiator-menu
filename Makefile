@@ -26,9 +26,9 @@ ifeq ($(OS), Windows_NT)
 	CONV=$(SH_COFF_BIN)/sh-coff-objcopy.exe
 	CUE_MAKER=$(COMPILER_DIR)/TOOLS/JoEngineCueMaker.exe
 else
-	CC=wine $(SH_COFF_BIN)/sh-coff-gcc.exe
-	CONV=wine $(SH_COFF_BIN)/sh-coff-objcopy.exe
-	CUE_MAKER=wine $(COMPILER_DIR)/TOOLS/JoEngineCueMaker.exe
+	CC=sh-none-elf-gcc
+	CONV=sh-none-elf-objcopy
+	CUE_MAKER=mono $(COMPILER_DIR)/TOOLS/JoEngineCueMaker.exe
 endif
 
 MKISOFS=mkisofs
@@ -211,7 +211,7 @@ OBJS = $(SRCS:.c=.o)
 # remove the comment below when nosgl.linker is fixed
 #ifeq (1,${JO_COMPILE_USING_SGL})
 	SGLDIR = $(COMPILER_DIR)/SGL_302j
-	SGLIDR = $(SGLDIR)/inc
+	SGLIDR = $(SGLDIR)/INC
 	SGLLDR = $(SGLDIR)/LIB_COFF
 #endif
 
@@ -221,7 +221,7 @@ CCFLAGS += -fkeep-inline-functions -W -Wall -Wshadow -Wbad-function-cast -Winlin
 -Winline -Wlong-long -Wsign-compare -Wextra \
 --param max-inline-insns-single=50 -fms-extensions -std=gnu99 \
 -fmerge-all-constants -fno-ident -ffunction-sections -fdata-sections -fno-unwind-tables -fno-asynchronous-unwind-tables \
--fomit-frame-pointer -fstrength-reduce -frerun-loop-opt -Os -nodefaultlibs -nostdlib -fno-builtin \
+-fomit-frame-pointer -fstrength-reduce -frerun-loop-opt -Os -nodefaultlibs -nostdlib -fno-builtin -fno-pie \
 -m2 -c -I$(JO_ENGINE_SRC_DIR)
 
 # remove the comment below when nosgl.linker is fixed
@@ -236,6 +236,7 @@ LDFLAGS = -m2
 #endif
 LDFLAGS +=-Xlinker --format=coff-sh -Xlinker -T$(LDFILE) -Xlinker -Map \
           -Xlinker $(MPFILE) -Xlinker -e -Xlinker ___Start -nostartfiles
+LIBS += -Wl,--format=elf32-sh -lgcc
 DFLAGS =
 
 ENTRYPOINT = $(OUT_DIR)/0.bin
