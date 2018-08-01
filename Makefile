@@ -236,7 +236,7 @@ LDFLAGS = -m2
 #endif
 LDFLAGS +=-Xlinker --format=coff-sh -Xlinker -T$(LDFILE) -Xlinker -Map \
           -Xlinker $(MPFILE) -Xlinker -e -Xlinker ___Start -nostartfiles
-LIBS += -Wl,--format=elf32-sh -lgcc
+LIBS += -L./lib/joengine/Compiler/SH_COFF/sh-coff/sh-coff/lib/ -lc -Wl,--format=elf32-sh -lgcc
 DFLAGS =
 
 ENTRYPOINT = $(OUT_DIR)/0.bin
