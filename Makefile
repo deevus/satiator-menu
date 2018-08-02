@@ -26,8 +26,8 @@ ifeq ($(OS), Windows_NT)
 	CONV=$(SH_COFF_BIN)/sh-coff-objcopy.exe
 	CUE_MAKER=$(COMPILER_DIR)/TOOLS/JoEngineCueMaker.exe
 else
-	CC=sh-none-elf-gcc
-	CONV=sh-none-elf-objcopy
+	CC=$(INSTALL_ROOT)/sh-elf/bin/sh-elf-gcc
+	CONV=$(INSTALL_ROOT)/sh-elf/bin/sh-elf-objcopy
 	CUE_MAKER=mono $(COMPILER_DIR)/TOOLS/JoEngineCueMaker.exe
 endif
 
