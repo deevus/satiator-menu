@@ -26,9 +26,10 @@ ifeq ($(OS), Windows_NT)
 	CONV=$(SH_COFF_BIN)/sh-coff-objcopy.exe
 	CUE_MAKER=$(COMPILER_DIR)/TOOLS/JoEngineCueMaker.exe
 else
-	CC=sh-elf-gcc
-	CONV=sh-elf-objcopy
-	CUE_MAKER=mono $(COMPILER_DIR)/TOOLS/JoEngineCueMaker.exe
+	SH_COFF_BIN=$(COMPILER_DIR)/SH_NONE_ELF/bin
+	CC=$(SH_COFF_BIN)/sh-none-elf-gcc-8.2.0
+	CONV=$(SH_COFF_BIN)/sh-none-elf-objcopy
+	CUE_MAKER=$(COMPILER_DIR)/TOOLS/CueMaker
 endif
 
 MKISOFS=mkisofs
@@ -38,6 +39,8 @@ MKDIR=mkdir -p
 # Sources
 
 SRCS=src/main.c
+
+CCFLAGS += -flto
 
 ifeq (${JO_FRAMERATE},)
 	CCFLAGS += -DJO_FRAMERATE=1
@@ -239,6 +242,8 @@ LDFLAGS +=-Xlinker --format=coff-sh -Xlinker -T$(LDFILE) -Xlinker -Map \
 LIBS += -L./lib/joengine/Compiler/SH_COFF/sh-coff/sh-coff/lib/ -lc -Wl,--format=elf32-sh -lgcc
 DFLAGS =
 
+LIBS += -L.$(COMPILER_DIR)/SH_COFF/sh-coff/sh-coff/lib/ -Wl,--format=elf32-sh -Wl,--relax -lgcc
+
 ENTRYPOINT = $(OUT_DIR)/0.bin
 TARGET   = $(OUT_DIR)/satiator_menu.coff
 TARGET1  = $(TARGET:.coff=.bin)
@@ -282,3 +287,6 @@ $(OUT_DIR):
 
 clean:
 	$(RM) $(OBJS) $(OUT_DIR) $(MPFILE) $(ENTRYPOINT)
+
+mednafen: all
+	mednafen build/satiator_menu.cue
