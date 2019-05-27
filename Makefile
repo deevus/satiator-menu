@@ -24,12 +24,9 @@ OUT_DIR=./build
 ifeq ($(OS), Windows_NT)
 	CC=$(SH_COFF_BIN)/sh-coff-gcc.exe
 	CONV=$(SH_COFF_BIN)/sh-coff-objcopy.exe
-	CUE_MAKER=$(COMPILER_DIR)/TOOLS/JoEngineCueMaker.exe
 else
-	SH_COFF_BIN=$(COMPILER_DIR)/SH_NONE_ELF/bin
-	CC=$(SH_COFF_BIN)/sh-none-elf-gcc-8.2.0
-	CONV=$(SH_COFF_BIN)/sh-none-elf-objcopy
-	CUE_MAKER=$(COMPILER_DIR)/TOOLS/CueMaker
+	CC=saturn-sh2-gcc
+	CONV=saturn-sh2-objcopy
 endif
 
 MKISOFS=mkisofs
@@ -277,7 +274,7 @@ $(TARGET2): $(TARGET)
 	$(MKISOFS) $(MKISOFS_FLAGS)
 
 $(TARGET3): $(TARGET1) $(TARGET2)
-	$(CUE_MAKER) $(OUT_DIR)
+	cp satiator_menu.cue $(OUT_DIR)
 
 $(OUT_DIR):
 	$(MKDIR) $(OUT_DIR)
