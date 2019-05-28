@@ -243,9 +243,9 @@ LIBS += -L.$(COMPILER_DIR)/SH_COFF/sh-coff/sh-coff/lib/ -Wl,--format=elf32-sh -W
 
 ENTRYPOINT = $(OUT_DIR)/0.bin
 TARGET   = $(OUT_DIR)/satiator_menu.coff
-TARGET1  = $(TARGET:.coff=.bin)
-TARGET2  = $(TARGET:.coff=.iso)
-TARGET3  = $(TARGET:.coff=.cue)
+TARGET_BIN  = $(TARGET:.coff=.bin)
+TARGET_ISO  = $(TARGET:.coff=.iso)
+TARGET_CUE  = $(TARGET:.coff=.cue)
 MPFILE   = $(TARGET:.coff=.map)
 IPFILE   = $(CMNDIR)/IP.BIN
 ifeq (1,${JO_COMPILE_USING_SGL})
@@ -257,24 +257,24 @@ endif
 MKISOFS_FLAGS=-quiet -sysid "SEGA SATURN" -volid "SaturnApp" -volset "SaturnApp" \
 	-publisher "SEGA ENTERPRISES, LTD." -preparer "SEGA ENTERPRISES, LTD." -appid "SaturnApp" \
 	-abstract "cd/ABS.TXT" -copyright "cd/CPY.TXT" -biblio "cd/BIB.TXT" -generic-boot $(IPFILE) \
-	-full-iso9660-filenames -o $(TARGET2) $(ASSETS_DIR) $(ENTRYPOINT)
+	-full-iso9660-filenames -o $(TARGET_ISO) $(ASSETS_DIR) $(ENTRYPOINT)
 
 .phony: all
 
-all: $(OUT_DIR) $(TARGET) $(TARGET1) $(TARGET2) $(TARGET3)
+all: $(OUT_DIR) $(TARGET) $(TARGET_BIN) $(TARGET_ISO) $(TARGET_CUE)
 
 $(TARGET) : $(SYSOBJS) $(OBJS) $(MAKEFILE) $(LDFILE)
 	$(CC) $(LDFLAGS) $(SYSOBJS) $(OBJS) $(LIBS) -o $@
 
-$(TARGET1) : $(SYSOBJS) $(OBJS) $(MAKEFILE) $(LDFILE)
-	$(CONV) -O binary $(TARGET) $(TARGET1)
+$(TARGET_BIN) : $(SYSOBJS) $(OBJS) $(MAKEFILE) $(LDFILE)
+	$(CONV) -O binary $(TARGET) $(TARGET_BIN)
 
-$(TARGET2): $(TARGET)
+$(TARGET_ISO): $(TARGET)
 	$(CONV) -O binary $(TARGET) $(ENTRYPOINT)
 	$(MKISOFS) $(MKISOFS_FLAGS)
 
-$(TARGET3): $(TARGET1) $(TARGET2)
-	cp satiator_menu.cue $(OUT_DIR)
+$(TARGET_CUE): $(TARGET_BIN) $(TARGET_ISO)
+	cp $(notdir $(TARGET_CUE)) $(OUT_DIR)
 
 $(OUT_DIR):
 	$(MKDIR) $(OUT_DIR)
