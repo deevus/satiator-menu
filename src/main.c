@@ -26,17 +26,28 @@
 ** SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 #include <jo/jo.h>
+#include "xbuttonmap.h"
 
 #define IMAGE_DIR "IMAGES"
 
+static int anim_id;
+
 void Draw(void) {
-    // does nothing
+    jo_sprite_draw3D2(jo_get_anim_sprite(anim_id), 160, 120, 450);
+
+    if (jo_is_sprite_anim_stopped(anim_id)) {
+        jo_start_sprite_anim_loop(anim_id);
+    }
+}
+
+int LoadXButton() {
+    return jo_sprite_add_bin_tileset(IMAGE_DIR, "XBUTTON.BIN", JO_COLOR_Green, XButtonMap, JO_TILE_COUNT(XButtonMap));
 }
 
 void LoadBackground() {
     jo_img bg;
 
-    jo_bin_loader(&bg, IMAGE_DIR, "MENUBG.BIN", JO_COLOR_Transparent);
+    jo_tga_loader(&bg, IMAGE_DIR, "MENUBG.TGA", JO_COLOR_Transparent);
     jo_set_background_sprite(&bg, 0, 0);
     jo_free_img(&bg);
 }
@@ -46,6 +57,8 @@ void jo_main(void) {
 
     /*InitBorder();*/
     LoadBackground();
+
+    anim_id = jo_create_sprite_anim(LoadXButton(), JO_TILE_COUNT(XButtonMap), 8);
 
     jo_core_add_callback(Draw);
     jo_core_run();
