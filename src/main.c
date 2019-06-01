@@ -26,11 +26,16 @@
 ** SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 #include <jo/jo.h>
+#include "entity.h"
+#include "gamebrowser.h"
+#include "savemanager.h"
 
 #define IMAGE_DIR "IMAGES"
 
-void Draw(void) {
-    // does nothing
+EHeader *root;
+
+void Menu() {
+    entity_draw(root);
 }
 
 void LoadBackground() {
@@ -44,9 +49,13 @@ void LoadBackground() {
 void jo_main(void) {
     jo_core_init(JO_COLOR_Black);
 
+    EGameBrowser *game_browser = entity_game_browser_create();
+    root = (EHeader*)entity_game_browser_create();
+
     /*InitBorder();*/
     LoadBackground();
 
-    jo_core_add_callback(Draw);
+    jo_core_add_callback(Menu);
+
     jo_core_run();
 }

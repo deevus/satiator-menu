@@ -35,7 +35,7 @@ MKDIR=mkdir -p
 
 # Sources
 
-SRCS=src/main.c
+SRCS= $(wildcard src/*.c)
 
 CCFLAGS += -flto
 

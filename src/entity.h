@@ -1,6 +1,5 @@
 #ifndef ENTITY_H
 #define ENTITY_H
-#endif
 
 #include <stdint.h>
 
@@ -11,16 +10,13 @@ typedef enum {
 } EType;
 
 typedef struct {
-    uint8_t id;
+    void *id;
+    char *name;
     EType type;
     void *next;
     void *prev;
 } EHeader;
 
-typedef struct {
-    EHeader header;
-} EGameBrowser;
+void entity_draw(EHeader *header);
 
-typedef struct {
-    EHeader header;
-} ESaveManager;
+#endif
