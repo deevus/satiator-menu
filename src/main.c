@@ -27,33 +27,19 @@
 */
 #include <jo/jo.h>
 #include "entity.h"
-#include "gamebrowser.h"
-#include "savemanager.h"
 
 #define IMAGE_DIR "IMAGES"
 
-void *root;
+void *menu;
 
 void Menu() {
-    entity_draw(root);
-}
-
-void LoadBackground() {
-    jo_img bg;
-
-    jo_bin_loader(&bg, IMAGE_DIR, "MENUBG.BIN", JO_COLOR_Transparent);
-    jo_set_background_sprite(&bg, 0, 0);
-    jo_free_img(&bg);
+    entity_draw(menu);
 }
 
 void jo_main(void) {
     jo_core_init(JO_COLOR_Black);
 
-    EGameBrowser *game_browser = entity_game_browser_create();
-    root = game_browser;
-
-    /*InitBorder();*/
-    LoadBackground();
+    menu = entity_create(ET_MENU);
 
     jo_core_add_callback(Menu);
 
