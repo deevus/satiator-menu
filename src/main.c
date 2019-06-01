@@ -32,7 +32,7 @@
 
 #define IMAGE_DIR "IMAGES"
 
-EHeader *root;
+void *root;
 
 void Menu() {
     entity_draw(root);
@@ -50,7 +50,7 @@ void jo_main(void) {
     jo_core_init(JO_COLOR_Black);
 
     EGameBrowser *game_browser = entity_game_browser_create();
-    root = (EHeader*)entity_game_browser_create();
+    root = game_browser;
 
     /*InitBorder();*/
     LoadBackground();

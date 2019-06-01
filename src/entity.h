@@ -19,4 +19,6 @@ typedef struct {
 
 void entity_draw(EHeader *header);
 
+void entity_free(EHeader *header);
+
 #endif

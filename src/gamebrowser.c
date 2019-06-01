@@ -20,5 +20,9 @@ EGameBrowser *entity_game_browser_create() {
 void entity_game_browser_draw(EGameBrowser *game_browser) {
     EHeader *header = (EHeader*)game_browser;
 
-    jo_printf(0, 0, header->name);
+    jo_printf(10, 10, "%s", header->name);
+}
+
+void entity_game_browser_free(EGameBrowser *game_browser) {
+    free(game_browser);
 }
