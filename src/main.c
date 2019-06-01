@@ -26,11 +26,12 @@
 ** SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 #include <jo/jo.h>
+#include "effects.h"
 
 #define IMAGE_DIR "IMAGES"
 
 void Draw(void) {
-    // does nothing
+    draw_pattern_checkerboard();
 }
 
 void LoadBackground() {
