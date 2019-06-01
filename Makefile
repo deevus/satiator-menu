@@ -287,3 +287,6 @@ clean:
 
 mednafen: all
 	mednafen build/satiator_menu.cue
+
+yabause: all
+	yabause  --autostart --iso=./build/satiator_menu.iso --no-bios
