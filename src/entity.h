@@ -4,18 +4,15 @@
 #include <stdint.h>
 
 typedef enum {
-    ET_MENU,
-    ET_GAME_BROWSER,
-    ET_SAVE_MANAGER,
+    ET_SCREEN,
+    ET_DRAW,
     ET_COUNT,
 } EType;
 
 typedef struct {
-    void *id;
-    char *name;
+    uint32_t id;
     EType type;
-    void *next;
-    void *prev;
+    uint8_t position[3];
 } EHeader;
 
 void entity_draw(EHeader *header);

@@ -30,18 +30,13 @@
 
 #define IMAGE_DIR "IMAGES"
 
-void *menu;
-
-void Menu() {
-    entity_draw(menu);
+void Draw() {
 }
 
 void jo_main(void) {
     jo_core_init(JO_COLOR_Black);
 
-    menu = entity_create(ET_MENU);
-
-    jo_core_add_callback(Menu);
+    jo_core_add_callback(Draw);
 
     jo_core_run();
 }
