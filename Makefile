@@ -286,7 +286,7 @@ clean:
 	$(RM) $(OBJS) $(OUT_DIR) $(MPFILE) $(ENTRYPOINT)
 
 mednafen: all
-	mednafen build/satiator_menu.cue
+	mednafen -ss.videoip 0 build/satiator_menu.cue
 
 yabause: all
 	yabause  --autostart --iso=./build/satiator_menu.iso --no-bios
