@@ -4,6 +4,7 @@
 #include <stdint.h>
 #include "linkedlist.h"
 #include "jo/jo.h"
+#include "message.h"
 
 typedef enum {
     ET_SCREEN,
@@ -19,6 +20,7 @@ typedef struct {
     void *startup;
     void *update;
     void *destroy;
+    void *receive_message;
 } EHeader;
 
 typedef struct {
@@ -47,6 +49,10 @@ void entity_startup(EHeader *entity);
 void entity_update(EHeader *entity);
 
 void entity_destroy(EHeader *entity);
+
+void entity_send_message(const Message *message, const linkedlist_t *to, const void *from);
+
+void entity_receive_message(EHeader *entity, const Message *message, const void *source);
 
 void entity_screen_update_children(EScreen *entity);
 

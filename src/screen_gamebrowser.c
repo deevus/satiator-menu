@@ -2,9 +2,23 @@
 #include "entity_background.h"
 #include "jo/jo.h"
 #include <stdlib.h>
+#include "message.h"
+#include "message_type.h"
+
+static void screen_gamebrowser_key_event(const EScreen *screen, const Message *message) {
+    KeyEventMessageData *data = (KeyEventMessageData *)message->data;
+
+    if (data->pressed) {
+        jo_printf(5, 5, "Pressed      ");
+    } else {
+        jo_printf(5, 5, "Not Pressed");
+    }
+}
 
 static void screen_gamebrowser_update(EScreen *screen) {
     entity_screen_update_children(screen);
+
+    message_event_subscribe(screen, MT_KEY_EVENT, (MessageHandler *)&screen_gamebrowser_key_event);
 }
 
 static void screen_gamebrowser_startup(EScreen *screen) {

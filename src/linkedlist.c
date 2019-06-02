@@ -5,7 +5,9 @@
 void linkedlist_init(linkedlist_t *ll) {
     //init struct vars
     node_init(&ll->sentinel, NULL);
+
     ll->sentinel.nextptr = ll->sentinel.prevptr = &ll->sentinel;
+
     ll->size = 0;
 }
 
@@ -17,28 +19,27 @@ node_t *linkedlist_insert(linkedlist_t *ll, const void *data) {
     ll->sentinel.prevptr->nextptr = temp;
     temp->prevptr = ll->sentinel.prevptr;
 
-    if (ll->circular)
+    if (ll->circular) {
         temp->nextptr = &ll->sentinel;
+    }
 
     ll->sentinel.prevptr = temp;
-
     ll->size++;
 
     return temp;
 }
 
 const node_t *linkedlist_gethead(const linkedlist_t *ll) {
-    const void *data = NULL;
     return ll->sentinel.nextptr;
 }
 
 const node_t *linkedlist_gettail(const linkedlist_t *ll) {
-    const void *data = NULL;
     return ll->sentinel.prevptr;
 }
 
-static node_t *find_node(const linkedlist_t *ll, const void *data) {
-    node_t *curr = ll->sentinel.nextptr;
+const node_t *linkedlist_find_node(const linkedlist_t *ll, void *data) {
+    const node_t *curr = ll->sentinel.nextptr;
+
     while (curr) {
         if (data == curr->data) {
             return curr;
@@ -52,7 +53,7 @@ static node_t *find_node(const linkedlist_t *ll, const void *data) {
 
 void linkedlist_remove(linkedlist_t *ll, const void *data) {
     //find node
-    node_t *node = find_node(ll, data);
+    const node_t *node = linkedlist_find_node(ll, data);
     if (!node) {
         jo_core_error("Node not found.\r\n");
         return;
