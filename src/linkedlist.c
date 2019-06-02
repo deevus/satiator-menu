@@ -1,6 +1,5 @@
 #include "linkedlist.h"
 #include <stdlib.h>
-#include <stdio.h>
 #include "jo/jo.h"
 
 void linkedlist_init(linkedlist_t *ll) {
@@ -88,15 +87,18 @@ const int linkedlist_getsize(const linkedlist_t *ll) {
 }
 
 void linkedlist_destroy(linkedlist_t *ll) {
-    node_t *next, *curr = ll->sentinel.nextptr;
+    node_t *next;
+    node_t *curr = ll->sentinel.nextptr;
+
     for (int i = 0; i < ll->size; ++i)
     {
         //get next node
         next = curr->nextptr;
 
         //free this one
-        if (curr)
+        if (curr) {
             free(curr);
+        }
 
         //get next
         curr = next;
