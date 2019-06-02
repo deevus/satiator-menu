@@ -31,43 +31,53 @@
 #include "linkedlist.h"
 #include "screen_gamebrowser.h"
 #include <stdlib.h>
+#include <signal.h>
 
 #define IMAGE_DIR "IMAGES"
 
 linkedlist_t *entities;
 
-void StartUp() {
-    entities = malloc(sizeof(linkedlist_t));
+void Load() {
+    entities = (linkedlist_t *)malloc(sizeof(linkedlist_t));
     linkedlist_init(entities);
-
-    node_t *current = linkedlist_insert(entities, screen_gamebrowser_create());
-    while (current) {
-        EHeader *entity = (EHeader*)current->data;
-
-        entity_startup(entity);
-
-        current = current->nextptr;
-    }
+    linkedlist_insert(entities, screen_gamebrowser_create());
 }
 
-void Update() {
+static void process_entities(void (*callback)(EHeader*)) {
     node_t *current = linkedlist_gethead(entities);
 
     while (current) {
         EHeader *entity = (EHeader*)current->data;
 
-        entity_update(entity);
+        callback(entity);
 
         current = current->nextptr;
     }
 }
 
+void StartUp() {
+    process_entities(&entity_startup);
+}
+
+void Update() {
+    process_entities(&entity_update);
+}
+
+void Destroy() {
+    process_entities(&entity_destroy);
+}
+
 void jo_main(void) {
     jo_core_init(JO_COLOR_Black);
+
+    Load();
 
     StartUp();
 
     jo_core_add_callback(Update);
+
+    // does this get called?
+    signal(SIGINT, Destroy);
 
     jo_core_run();
 }
