@@ -7,17 +7,18 @@
 typedef struct {
     node_t sentinel;
     int size;
+    bool circular;
 } linkedlist_t;
 
 void linkedlist_init(linkedlist_t *ll);
 
-void linkedlist_insert(linkedlist_t *ll, const void *data);
+node_t *linkedlist_insert(linkedlist_t *ll, const void *data);
 
 void linkedlist_remove(linkedlist_t *ll, const void *data);
 
-const void *linkedlist_gethead(const linkedlist_t *ll);
+const node_t *linkedlist_gethead(const linkedlist_t *ll);
 
-const void *linkedlist_gettail(const linkedlist_t *ll);
+const node_t *linkedlist_gettail(const linkedlist_t *ll);
 
 bool linkedlist_isempty(const linkedlist_t *ll);
 

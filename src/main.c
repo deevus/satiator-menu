@@ -27,16 +27,47 @@
 */
 #include <jo/jo.h>
 #include "entity.h"
+#include "node.h"
+#include "linkedlist.h"
+#include "screen_gamebrowser.h"
+#include <stdlib.h>
 
 #define IMAGE_DIR "IMAGES"
 
-void Draw() {
+linkedlist_t *entities;
+
+void StartUp() {
+    entities = malloc(sizeof(linkedlist_t));
+    linkedlist_init(entities);
+
+    node_t *current = linkedlist_insert(entities, screen_gamebrowser_create());
+    while (current) {
+        EHeader *entity = (EHeader*)current->data;
+
+        entity_startup(entity);
+
+        current = current->nextptr;
+    }
+}
+
+void Update() {
+    node_t *current = linkedlist_gethead(entities);
+
+    while (current) {
+        EHeader *entity = (EHeader*)current->data;
+
+        entity_update(entity);
+
+        current = current->nextptr;
+    }
 }
 
 void jo_main(void) {
     jo_core_init(JO_COLOR_Black);
 
-    jo_core_add_callback(Draw);
+    StartUp();
+
+    jo_core_add_callback(Update);
 
     jo_core_run();
 }

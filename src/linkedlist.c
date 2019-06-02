@@ -9,31 +9,32 @@ void linkedlist_init(linkedlist_t *ll) {
     ll->size = 0;
 }
 
-void linkedlist_insert(linkedlist_t *ll, const void *data) {
+node_t *linkedlist_insert(linkedlist_t *ll, const void *data) {
     node_t *temp = malloc(sizeof(node_t));
     node_init(temp, data);
 
     //set new tail
     ll->sentinel.prevptr->nextptr = temp;
     temp->prevptr = ll->sentinel.prevptr;
-    temp->nextptr = &ll->sentinel;
+
+    if (ll->circular)
+        temp->nextptr = &ll->sentinel;
+
     ll->sentinel.prevptr = temp;
 
     ll->size++;
+
+    return temp;
 }
 
-const void *linkedlist_gethead(const linkedlist_t *ll) {
+const node_t *linkedlist_gethead(const linkedlist_t *ll) {
     const void *data = NULL;
-    node_t *head = ll->sentinel.nextptr;
-    if (head != NULL) data = head->data;
-    return data;
+    return ll->sentinel.nextptr;
 }
 
-const void *linkedlist_gettail(const linkedlist_t *ll) {
+const node_t *linkedlist_gettail(const linkedlist_t *ll) {
     const void *data = NULL;
-    node_t *tail = ll->sentinel.prevptr;
-    if (tail != NULL) data = tail->data;
-    return data;
+    return ll->sentinel.prevptr;
 }
 
 static node_t *find_node(const linkedlist_t *ll, const void *data) {
