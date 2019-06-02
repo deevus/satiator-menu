@@ -5,25 +5,26 @@
 static void entity_background_update(EBackground *background) {
     EHeader *header = (EHeader*)background;
 
-    jo_set_background_sprite(&background->img, header->position[0], header->position[1]);
+    // TODO - work out how to draw these using layers rather than sprites
+    jo_sprite_draw3D2(background->sprite_id, header->position.x, header->position.y, header->position.z);
 }
 
 static void entity_background_startup(EBackground *background) {
     if (strstr(background->name, "BIN")) {
-        jo_bin_loader(&background->img, background->directory, background->name, background->transparent_color);
+        background->sprite_id = jo_sprite_add_bin(background->directory, background->name, background->transparent_color);
     } else {
-        jo_tga_loader(&background->img, background->directory, background->name, background->transparent_color);
+        background->sprite_id = jo_sprite_add_tga(background->directory, background->name, background->transparent_color);
     }
 }
 
 static void entity_background_destroy(EBackground *background) {
-    jo_free_img(&background->img);
+    jo_sprite_free_from(background->sprite_id);
 }
 
 EBackground *entity_background_create(char *directory, char *name, jo_color transparent_color) {
     EHeader *header = entity_create(ET_BACKGROUND);
-    header->position[0] = 0;
-    header->position[1] = 0;
+    jo_pos3D position = {0, 0, 450};
+    header->position = position;
 
     header->startup = &entity_background_startup;
     header->update  = &entity_background_update;

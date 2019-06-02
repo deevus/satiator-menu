@@ -15,7 +15,7 @@ typedef enum {
 typedef struct {
     uint32_t id;
     EType type;
-    uint8_t position[3];
+    jo_pos3D position;
     void *startup;
     void *update;
     void *destroy;
@@ -31,7 +31,7 @@ typedef struct {
     char* directory;
     char* name;
     jo_color transparent_color;
-    jo_img img;
+    int sprite_id;
 } EBackground;
 
 typedef struct {

@@ -68,7 +68,7 @@ void Destroy() {
 }
 
 void jo_main(void) {
-    jo_core_init(JO_COLOR_Black);
+    jo_core_init(JO_COLOR_RGB(12, 13, 15));
 
     Load();
 

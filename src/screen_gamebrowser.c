@@ -9,9 +9,12 @@ static void screen_gamebrowser_update(EScreen *screen) {
 
 static void screen_gamebrowser_startup(EScreen *screen) {
     // background
-    EBackground *background = entity_background_create("IMAGES", "MENUBG.BIN", JO_COLOR_Green);
-
+    EBackground *background = entity_background_create("IMAGES", "CHECK.TGA", JO_COLOR_Green);
     linkedlist_insert(screen->children, background);
+
+    // border
+    EBackground *border = entity_background_create("IMAGES", "BORDER.TGA", JO_COLOR_Green);
+    linkedlist_insert(screen->children, border);
 
     entity_screen_startup_children(screen);
 }
