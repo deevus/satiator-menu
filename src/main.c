@@ -65,8 +65,6 @@ void startup() {
 
 void update() {
     process_entities(&entity_update);
-
-    jo_printf(10, 10, "%d", jo_time_get_frc());
 }
 
 void destroy() {
