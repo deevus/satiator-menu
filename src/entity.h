@@ -50,8 +50,6 @@ void entity_update(EHeader *entity);
 
 void entity_destroy(EHeader *entity);
 
-void entity_send_message(const Message *message, const linkedlist_t *to, const void *from);
-
 void entity_screen_update_children(EScreen *entity);
 
 void entity_screen_startup_children(EScreen *entity);

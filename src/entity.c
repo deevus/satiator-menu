@@ -47,16 +47,6 @@ void entity_destroy(EHeader *entity) {
     }
 }
 
-void entity_send_message(const Message *message, const linkedlist_t *to, const void *from) {
-    const node_t *current = linkedlist_gethead(to);
-
-    while (current) {
-        entity_receive_message((EHeader *)current->data, message, from);
-
-        current = linkedlist_next(to, current);
-    }
-}
-
 void entity_screen_update_children(EScreen *entity) {
     const node_t *current = linkedlist_gethead(entity->children);
 
