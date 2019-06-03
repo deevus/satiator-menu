@@ -74,18 +74,16 @@ void destroy() {
 }
 
 void input() {
-    if (jo_is_pad1_key_pressed(JO_KEY_A)) {
-        KeyEventMessageData data = {
-            JO_KEY_A,
-            true,
-        };
+    KeyEventMessageData data = {
+        JO_KEY_A,
+        jo_is_pad1_key_pressed(JO_KEY_A),
+    };
 
-        Message message;
-        message.type = MT_KEY_EVENT;
-        message.data = &data;
+    Message message;
+    message.type = MT_KEY_EVENT;
+    message.data = &data;
 
-        message_event_dispatch(message);
-    }
+    message_event_dispatch(message);
 }
 
 void jo_main(void) {
