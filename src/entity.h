@@ -52,8 +52,6 @@ void entity_destroy(EHeader *entity);
 
 void entity_send_message(const Message *message, const linkedlist_t *to, const void *from);
 
-void entity_receive_message(EHeader *entity, const Message *message, const void *source);
-
 void entity_screen_update_children(EScreen *entity);
 
 void entity_screen_startup_children(EScreen *entity);

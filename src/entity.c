@@ -57,15 +57,6 @@ void entity_send_message(const Message *message, const linkedlist_t *to, const v
     }
 }
 
-void entity_receive_message(EHeader *entity, const Message *message, const void *source) {
-    void (*receive_message)(const EHeader*, const Message*, const void*) = entity->receive_message;
-
-    if (receive_message) {
-        (*receive_message)(entity, message, source);
-    }
-}
-
-
 void entity_screen_update_children(EScreen *entity) {
     const node_t *current = linkedlist_gethead(entity->children);
 
