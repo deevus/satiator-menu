@@ -1,5 +1,6 @@
 #include <stdlib.h>
 #include "entity.h"
+#include "message.h"
 
 EHeader *entity_create(EType type) {
     EHeader *entity;
@@ -52,7 +53,7 @@ void entity_screen_update_children(EScreen *entity) {
     while (current) {
         entity_update((EHeader*)current->data);
 
-        current = current->nextptr;
+        current = linkedlist_next(entity->children, current);
     }
 }
 
@@ -62,6 +63,6 @@ void entity_screen_startup_children(EScreen *entity) {
     while (current) {
         entity_startup((EHeader*)current->data);
 
-        current = current->nextptr;
+        current = linkedlist_next(entity->children, current);
     }
 }

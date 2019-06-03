@@ -32,12 +32,16 @@
 #include "screen_gamebrowser.h"
 #include <stdlib.h>
 #include <signal.h>
+#include "message.h"
+#include "message_type.h"
 
 #define IMAGE_DIR "IMAGES"
 
+extern linkedlist_t *event_subscribers;
+
 linkedlist_t *entities;
 
-void Load() {
+void load() {
     entities = (linkedlist_t *)malloc(sizeof(linkedlist_t));
     linkedlist_init(entities);
     linkedlist_insert(entities, screen_gamebrowser_create());
@@ -51,33 +55,47 @@ static void process_entities(void (*callback)(EHeader*)) {
 
         callback(entity);
 
-        current = current->nextptr;
+        current = linkedlist_next(entities, current);
     }
 }
 
-void StartUp() {
+void startup() {
     process_entities(&entity_startup);
 }
 
-void Update() {
+void update() {
     process_entities(&entity_update);
 }
 
-void Destroy() {
+void destroy() {
     process_entities(&entity_destroy);
+}
+
+void input() {
+    KeyEventMessageData data = {
+        JO_KEY_A,
+        jo_is_pad1_key_pressed(JO_KEY_A),
+    };
+
+    Message message;
+    message.type = MT_KEY_EVENT;
+    message.data = &data;
+
+    message_event_dispatch(message);
 }
 
 void jo_main(void) {
     jo_core_init(JO_COLOR_RGB(12, 13, 15));
 
-    Load();
+    load();
 
-    StartUp();
+    startup();
 
-    jo_core_add_callback(Update);
+    jo_core_add_callback(input);
+    jo_core_add_callback(update);
 
     // does this get called?
-    signal(SIGINT, Destroy);
+    signal(SIGINT, destroy);
 
     jo_core_run();
 }

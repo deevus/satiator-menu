@@ -4,6 +4,7 @@
 #include <stdint.h>
 #include "linkedlist.h"
 #include "jo/jo.h"
+#include "message.h"
 
 typedef enum {
     ET_SCREEN,
@@ -19,6 +20,7 @@ typedef struct {
     void *startup;
     void *update;
     void *destroy;
+    void *receive_message;
 } EHeader;
 
 typedef struct {
