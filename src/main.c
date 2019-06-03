@@ -55,7 +55,7 @@ static void process_entities(void (*callback)(EHeader*)) {
 
         callback(entity);
 
-        current = current->nextptr;
+        current = linkedlist_next(entities, current);
     }
 }
 
@@ -65,6 +65,8 @@ void startup() {
 
 void update() {
     process_entities(&entity_update);
+
+    jo_printf(10, 10, "%d", jo_time_get_frc());
 }
 
 void destroy() {
@@ -82,11 +84,7 @@ void input() {
         message.type = MT_KEY_EVENT;
         message.data = &data;
 
-        jo_printf(5, 6, "Dispatching event");
-
         message_event_dispatch(message);
-    } else {
-        jo_printf(5, 6, "                          ");
     }
 }
 

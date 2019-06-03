@@ -8,24 +8,25 @@ linkedlist_t *event_subscribers = NULL;
 static linkedlist_t *subscribers_for_type(MessageType type) {
     if (event_subscribers == NULL) {
         event_subscribers = (linkedlist_t *)malloc(sizeof(linkedlist_t));
+
         linkedlist_init(event_subscribers);
     }
 
     const node_t *node = linkedlist_gethead(event_subscribers);
-
-    jo_core_error("Node: %x", node);
-
     SubscriptionList *subscription_list = NULL;
 
-    while (node) {
-        SubscriptionList *temp = (SubscriptionList *)node->data;
+    if (event_subscribers->size > 0) {
+        while (node) {
+            SubscriptionList *temp = (SubscriptionList *)node->data;
 
-        if (subscription_list->type == type) {
-            subscription_list = temp;
-            break;
+            if (temp->type == type) {
+                subscription_list = temp;
+
+                break;
+            }
+
+            node = linkedlist_next(event_subscribers, node);
         }
-
-        node = node->nextptr;
     }
 
     if (subscription_list == NULL) {
@@ -64,19 +65,19 @@ void message_event_unsubscribe(const void *subscriber, const MessageType type) {
             break;
         }
 
-        current = current->nextptr;
+        current = linkedlist_next(subscriptions, current);
     }
 }
 
 void message_event_dispatch(const Message message) {
-    const node_t *current = linkedlist_gethead(subscribers_for_type(message.type));
+    const linkedlist_t *subscriptions = subscribers_for_type(message.type);
+    const node_t *current = linkedlist_gethead(subscriptions);
 
     while (current) {
         Subscription *subscription = (Subscription *)current->data;
-        MessageHandler handler     = *subscription->handler;
 
-        if (handler) handler(subscription->subscriber, &message);
+        if (subscription->handler) ((MessageHandler)subscription->handler)(subscription->subscriber, &message);
 
-        current = current->nextptr;
+        current = linkedlist_next(subscriptions, current);
     }
 }

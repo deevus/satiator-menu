@@ -28,4 +28,6 @@ void linkedlist_destroy(linkedlist_t *ll);
 
 const node_t *linkedlist_find_node(const linkedlist_t *ll, void *data);
 
+const node_t *linkedlist_next(const linkedlist_t *ll, const node_t *current);
+
 #endif /* LINKEDLIST_H */

@@ -18,10 +18,7 @@ node_t *linkedlist_insert(linkedlist_t *ll, const void *data) {
     //set new tail
     ll->sentinel.prevptr->nextptr = temp;
     temp->prevptr = ll->sentinel.prevptr;
-
-    if (ll->circular) {
-        temp->nextptr = &ll->sentinel;
-    }
+    temp->nextptr = &ll->sentinel;
 
     ll->sentinel.prevptr = temp;
     ll->size++;
@@ -30,11 +27,19 @@ node_t *linkedlist_insert(linkedlist_t *ll, const void *data) {
 }
 
 const node_t *linkedlist_gethead(const linkedlist_t *ll) {
-    return ll->sentinel.nextptr;
+    if (ll->size > 0) {
+        return ll->sentinel.nextptr;
+    }
+
+    return NULL;
 }
 
 const node_t *linkedlist_gettail(const linkedlist_t *ll) {
-    return ll->sentinel.prevptr;
+    if (ll->size > 0) {
+        return ll->sentinel.prevptr;
+    }
+
+    return NULL;
 }
 
 const node_t *linkedlist_find_node(const linkedlist_t *ll, void *data) {
@@ -45,7 +50,7 @@ const node_t *linkedlist_find_node(const linkedlist_t *ll, void *data) {
             return curr;
         }
 
-        curr = curr->nextptr;
+        curr = linkedlist_next(ll, curr);
     }
 
     return NULL;
@@ -78,6 +83,17 @@ void linkedlist_remove(linkedlist_t *ll, const void *data) {
 
     free(node);
     ll->size--;
+}
+
+const node_t *linkedlist_next(const linkedlist_t *ll, const node_t *current) {
+    const node_t *next = current->nextptr;
+
+    // if next node is the tail
+    if (next == &ll->sentinel) {
+        return NULL;
+    }
+
+    return next;
 }
 
 bool linkedlist_isempty(const linkedlist_t *ll) {

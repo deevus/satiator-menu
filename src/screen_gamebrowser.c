@@ -17,8 +17,6 @@ static void screen_gamebrowser_key_event(const EScreen *screen, const Message *m
 
 static void screen_gamebrowser_update(EScreen *screen) {
     entity_screen_update_children(screen);
-
-    message_event_subscribe(screen, MT_KEY_EVENT, (MessageHandler *)&screen_gamebrowser_key_event);
 }
 
 static void screen_gamebrowser_startup(EScreen *screen) {
@@ -31,6 +29,8 @@ static void screen_gamebrowser_startup(EScreen *screen) {
     linkedlist_insert(screen->children, border);
 
     entity_screen_startup_children(screen);
+
+    message_event_subscribe(screen, MT_KEY_EVENT, (MessageHandler *)&screen_gamebrowser_key_event);
 }
 
 const EScreen *screen_gamebrowser_create() {
@@ -42,7 +42,7 @@ const EScreen *screen_gamebrowser_create() {
 
     EScreen *screen = (EScreen*)header;
 
-    linkedlist_t *children = malloc(sizeof(linkedlist_t));
+    linkedlist_t *children = (linkedlist_t *)malloc(sizeof(linkedlist_t));
     linkedlist_init(children);
 
     screen->children = children;

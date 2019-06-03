@@ -53,7 +53,7 @@ void entity_send_message(const Message *message, const linkedlist_t *to, const v
     while (current) {
         entity_receive_message((EHeader *)current->data, message, from);
 
-        current = current->nextptr;
+        current = linkedlist_next(to, current);
     }
 }
 
@@ -72,7 +72,7 @@ void entity_screen_update_children(EScreen *entity) {
     while (current) {
         entity_update((EHeader*)current->data);
 
-        current = current->nextptr;
+        current = linkedlist_next(entity->children, current);
     }
 }
 
@@ -82,6 +82,6 @@ void entity_screen_startup_children(EScreen *entity) {
     while (current) {
         entity_startup((EHeader*)current->data);
 
-        current = current->nextptr;
+        current = linkedlist_next(entity->children, current);
     }
 }
