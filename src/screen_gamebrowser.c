@@ -5,6 +5,9 @@
 #include "message.h"
 #include "message_type.h"
 
+const int BACKGROUND_Z_INDEX = 450;
+const int FOREGROUND_Z_INDEX = 100;
+
 static void screen_gamebrowser_key_event(const EScreen *screen, const Message *message) {
     KeyEventMessageData *data = (KeyEventMessageData *)message->data;
 
@@ -21,11 +24,11 @@ static void screen_gamebrowser_update(EScreen *screen) {
 
 static void screen_gamebrowser_startup(EScreen *screen) {
     // background
-    EBackground *background = entity_background_create("IMAGES", "CHECK.TGA", JO_COLOR_Green);
+    EBackground *background = entity_background_create("IMAGES", "CHECK.TGA", JO_COLOR_Green, BACKGROUND_Z_INDEX);
     linkedlist_insert(screen->children, background);
 
     // border
-    EBackground *border = entity_background_create("IMAGES", "BORDER.TGA", JO_COLOR_Green);
+    EBackground *border = entity_background_create("IMAGES", "BORDER.TGA", JO_COLOR_Green, FOREGROUND_Z_INDEX);
     linkedlist_insert(screen->children, border);
 
     entity_screen_startup_children(screen);

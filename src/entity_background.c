@@ -21,9 +21,10 @@ static void entity_background_destroy(EBackground *background) {
     jo_sprite_free_from(background->sprite_id);
 }
 
-EBackground *entity_background_create(char *directory, char *name, jo_color transparent_color) {
+EBackground *entity_background_create(char *directory, char *name, jo_color transparent_color, int z_index) {
+    printf(z_index);
     EHeader *header = entity_create(ET_BACKGROUND);
-    jo_pos3D position = {0, 0, 450};
+    jo_pos3D position = {0, 0, z_index};
     header->position = position;
 
     header->startup = &entity_background_startup;
