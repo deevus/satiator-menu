@@ -29,4 +29,8 @@
 - https://github.com/CodeheadUK/CBFG
 - http://www.codehead.co.uk/cbfg/
 
+### USEFUL TOOLS
 
+#### BCHUNK
+- Convert ISO / Cue files etc
+- `brew install bchunk`
