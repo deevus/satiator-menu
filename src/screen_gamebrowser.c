@@ -1,6 +1,6 @@
 #include "screen_gamebrowser.h"
 #include "entity_background.h"
-#include "jo/jo.h"
+#include <jo/jo.h>
 #include <stdlib.h>
 #include "message.h"
 #include "message_type.h"
