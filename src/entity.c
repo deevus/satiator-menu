@@ -1,68 +1,19 @@
-#include <stdlib.h>
 #include "entity.h"
-#include "message.h"
+#include <stdlib.h>
+#include <string.h>
 
-EHeader *entity_create(EType type) {
-    EHeader *entity;
+uint16_t next_entity_id = 0;
 
-    switch (type) {
-        case ET_SCREEN:
-            entity = (EHeader*)malloc(sizeof(EScreen));
-            break;
-        case ET_TEXT:
-            entity = (EHeader*)malloc(sizeof(EText));
-            break;
-        case ET_BACKGROUND:
-            entity = (EHeader*)malloc(sizeof(EBackground));
-            break;
-        default:
-            jo_core_error("Invalid entity type: %d", type);
-            return NULL;
-    }
+static void entity_init(Entity *entity, ComponentArray *components) {
+    entity->id = next_entity_id++;
+
+    entity->components = components;
+}
+
+Entity *entity_create(ComponentArray *components) {
+    Entity *entity = (Entity *)malloc(sizeof(Entity));
+
+    entity_init(entity, components);
 
     return entity;
-}
-
-void entity_startup(EHeader *entity) {
-    void (*startup)(EHeader*) = entity->startup;
-
-    if (startup) {
-        (*startup)(entity);
-    }
-}
-
-void entity_update(EHeader *entity) {
-    void (*update)(EHeader*) = entity->update;
-
-    if (update) {
-        (*update)(entity);
-    }
-}
-
-void entity_destroy(EHeader *entity) {
-    void (*destroy)(EHeader*) = entity->destroy;
-
-    if (destroy) {
-        (*destroy)(entity);
-    }
-}
-
-void entity_screen_update_children(EScreen *entity) {
-    const node_t *current = linkedlist_gethead(entity->children);
-
-    while (current) {
-        entity_update((EHeader*)current->data);
-
-        current = linkedlist_next(entity->children, current);
-    }
-}
-
-void entity_screen_startup_children(EScreen *entity) {
-    const node_t *current = linkedlist_gethead(entity->children);
-
-    while (current) {
-        entity_startup((EHeader*)current->data);
-
-        current = linkedlist_next(entity->children, current);
-    }
 }

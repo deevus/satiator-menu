@@ -3,6 +3,6 @@
 
 #include "entity.h"
 
-const EScreen *screen_gamebrowser_create(void);
+const EntityArray *screen_gamebrowser_create();
 
 #endif
