@@ -65,6 +65,7 @@ void startup() {
 
 void update() {
     process_entities(&entity_update);
+
     jo_printf(0, 28, "Polygon count: %d  ", jo_3d_get_polygon_count());
 }
 
@@ -89,7 +90,6 @@ void jo_main(void) {
     jo_core_init(JO_COLOR_RGB(12, 13, 15));
 
     load();
-
     startup();
 
     jo_core_add_callback(input);

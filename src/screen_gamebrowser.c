@@ -31,6 +31,10 @@ static void screen_gamebrowser_startup(EScreen *screen) {
     EBackground *border = entity_background_create("IMAGES", "BORDER.TGA", JO_COLOR_Green, FOREGROUND_Z_INDEX);
     linkedlist_insert(screen->children, border);
 
+    // border
+    EBackground *logo = entity_background_create("IMAGES", "LOGO.TGA", JO_COLOR_Green, FOREGROUND_Z_INDEX);
+    linkedlist_insert(screen->children, logo);
+
     entity_screen_startup_children(screen);
 
     message_event_subscribe(screen, MT_KEY_EVENT, (MessageHandler *)&screen_gamebrowser_key_event);
