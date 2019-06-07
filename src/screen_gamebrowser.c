@@ -2,6 +2,7 @@
 #include "entity.h"
 #include "screen_gamebrowser.h"
 #include "e_background.h"
+#include <jo/jo.h>
 
 const EntityArray *screen_gamebrowser_create() {
     size_t num_entities = 1;

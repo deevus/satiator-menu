@@ -10,7 +10,7 @@ typedef struct {
 } Entity;
 
 typedef struct {
-    uint16_t size;
+    size_t size;
     Entity data[];
 } EntityArray;
 

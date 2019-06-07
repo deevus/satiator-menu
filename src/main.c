@@ -25,41 +25,30 @@
 ** (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 ** SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
+
 #include <jo/jo.h>
 #include "entity.h"
 #include "screen_gamebrowser.h"
 #include <stdlib.h>
 #include <signal.h>
+#include "ecs_admin.h"
+#include "s_assets.h"
+#include "s_draw.h"
 
-#define IMAGE_DIR "IMAGES"
+static ECSAdmin *admin;
 
-void load() {
-}
-
-void startup() {
-}
+static uint16_t update_callback;
 
 void update() {
-}
-
-void destroy() {
-}
-
-void input() {
+    ecs_admin_update(admin);
 }
 
 void jo_main(void) {
     jo_core_init(JO_COLOR_RGB(12, 13, 15));
 
-    load();
+    admin = ecs_admin_create(screen_gamebrowser_create());
 
-    startup();
-
-    jo_core_add_callback(input);
-    jo_core_add_callback(update);
-
-    // does this get called?
-    signal(SIGINT, destroy);
+    update_callback = jo_core_add_callback(update);
 
     jo_core_run();
 }

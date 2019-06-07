@@ -1,6 +1,7 @@
 #include "entity.h"
 #include <stdlib.h>
 #include <string.h>
+#include <jo/jo.h>
 
 uint16_t next_entity_id = 0;
 

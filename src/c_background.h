@@ -7,12 +7,12 @@
 
 typedef struct {
     ComponentHeader header;
-    char *directory;
-    char *filename;
+    const char *directory;
+    const char *filename;
     uint16_t image_id;
-    jo_img data;
+    jo_color transparent_color;
 } Background;
 
-const Background *component_background_create(char *directory, char *filename);
+Background *component_background_create(const char *directory, const char *filename, jo_color transparent_color);
 
 #endif

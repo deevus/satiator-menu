@@ -6,7 +6,7 @@
 #include <stdint.h>
 
 typedef enum {
-    CT_INPUT_S    = 1 << 0,
+    CT_INPUT      = 1 << 0,
     CT_TRANSFORM  = 1 << 1,
     CT_SPRITE     = 1 << 2,
     CT_DRAW       = 1 << 3,
@@ -17,16 +17,17 @@ typedef enum {
 
 typedef struct {
     ComponentType type;
+    bool singleton;
 } ComponentHeader;
 
 typedef struct {
     size_t size;
     ComponentType types;
-    ComponentHeader data[];
+    ComponentHeader *data[];
 } ComponentArray;
 
-const ComponentHeader *component_create(const ComponentType type);
+const ComponentHeader *component_create(const ComponentType type, const bool singleton);
 
-const ComponentHeader *component_get_singleton(const ComponentType type);
+const ComponentHeader *component_find(const ComponentArray *components, ComponentType type);
 
 #endif
