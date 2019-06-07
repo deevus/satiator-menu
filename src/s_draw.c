@@ -10,7 +10,7 @@ void system_draw_process(EntityArray *entities, uint16_t delta_ticks) {
         ComponentArray *components = entities->data[i].components;
 
         if (components->types & (CT_BACKGROUND | CT_TRANSFORM)) {
-            Background *background        = (Background *)component_find(components, CT_BACKGROUND);
+            BackgroundComponent *background        = (BackgroundComponent *)component_find(components, CT_BACKGROUND);
             TransformComponent *transform = (TransformComponent *)component_find(components, CT_TRANSFORM);
 
             jo_pos2D *position = &transform->position;

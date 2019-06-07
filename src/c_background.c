@@ -3,8 +3,8 @@
 #include <stdbool.h>
 #include <jo/jo.h>
 
-Background *component_background_create(const char *directory, const char *filename, jo_color transparent_color) {
-    Background *background = (Background *)malloc(sizeof(Background));
+BackgroundComponent *component_background_create(const char *directory, const char *filename, jo_color transparent_color) {
+    BackgroundComponent *background = (BackgroundComponent *)malloc(sizeof(BackgroundComponent));
 
     ComponentHeader header        = {CT_BACKGROUND, false};
     background->header            = header;

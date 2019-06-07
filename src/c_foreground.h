@@ -1,5 +1,5 @@
-#ifndef _C_BACKGROUND_H
-#define _C_BACKGROUND_H
+#ifndef _C_FOREGROUND_H
+#define _C_FOREGROUND_H
 
 #include <jo/jo.h>
 #include "component.h"
@@ -11,8 +11,9 @@ typedef struct {
     const char *filename;
     uint16_t image_id;
     jo_color transparent_color;
-} BackgroundComponent;
+} ForegroundComponent;
 
-BackgroundComponent *component_background_create(const char *directory, const char *filename, jo_color transparent_color);
+ForegroundComponent *component_foreground_create(const char *directory, const char *filename, jo_color transparent_color);
 
 #endif
+
