@@ -13,6 +13,7 @@ typedef enum {
     CT_FOCUS      = 1 << 4,
     CT_BACKGROUND = 1 << 5,
     CT_TEXT       = 1 << 6,
+    CT_FOREGROUND = 1 << 7,
 } ComponentType;
 
 typedef struct {
