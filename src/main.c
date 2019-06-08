@@ -43,6 +43,7 @@ linkedlist_t *entities;
 
 static int sprite_bumper_left_id;
 static int sprite_bumper_right_id;
+static int sprite_selector_id;
 
 void load() {
     entities = (linkedlist_t *)malloc(sizeof(linkedlist_t));
@@ -66,11 +67,83 @@ void startup() {
     process_entities(&entity_startup);
 }
 
+
+void draw_list() {
+    
+    char *game_titles[] = {
+        "Astal",
+        "Baku Baku",
+        "Bug",
+        "Burning Rangers",
+        "Dark Savior",
+        "Daytona USA",
+        "Deep Fear",
+        "Dragon Force",
+        "Grandia",
+        "Gungriffon"
+    };
+
+
+    int i;
+    for (i = 0; i < 10; i++) {
+        jo_printf(12, (2 * (i * 1)) + 10, game_titles[i]);
+        jo_printf(18, (2 * (i * 1)) + 10, 300);
+    }
+
+    // jo_font_printf_centered(FONT_LIST_WHT, 0, -80, 0.5f, "Astal");
+    // jo_font_printf_centered(FONT_LIST_WHT, 125, -80, 0.5f, "300");
+    // jo_font_printf_centered(FONT_LIST_WHT, 0, -60, 0.5f, "Baku Baku");
+    // jo_font_printf_centered(FONT_LIST_WHT, 125, -60, 0.5f, "300");
+    // jo_font_printf_centered(FONT_LIST_WHT, 0, -40, 0.5f, "Bug");
+    // jo_font_printf_centered(FONT_LIST_WHT, 125, -40, 0.5f, "300");
+    // jo_font_printf_centered(FONT_LIST_WHT, 0, -20, 0.5f, "Burning Rangers");
+    // jo_font_printf_centered(FONT_LIST_WHT, 125, -20, 0.5f, "300");
+    // jo_font_printf_centered(FONT_LIST_WHT, 0, -0, 0.5f, "Dark Savior");
+    // jo_font_printf_centered(FONT_LIST_WHT, 125, -0, 0.5f, "300");
+    // jo_font_printf_centered(FONT_LIST_WHT, 0, 20, 0.5f, "Daytona USA CCE");
+    // jo_font_printf_centered(FONT_LIST_WHT, 125, 20, 0.5f, "300");
+    // jo_font_printf_centered(FONT_LIST_WHT, 0, 40, 0.5f, "Deep Fear");
+    // jo_font_printf_centered(FONT_LIST_WHT, 125, 40, 0.5f, "300");
+    // jo_font_printf_centered(FONT_LIST_WHT, 0, 60, 0.5f, "Dragon Force");
+    // jo_font_printf_centered(FONT_LIST_WHT, 125, 60, 0.5f, "300");
+    // jo_font_printf_centered(FONT_LIST_WHT, 0, 80, 0.5f, "Grandia");
+    // jo_font_printf_centered(FONT_LIST_WHT, 125, 80, 0.5f, "300");
+    // jo_font_printf_centered(FONT_LIST_WHT, 0, 100, 0.5f, "Gungriffon");
+    // jo_font_printf_centered(FONT_LIST_WHT, 125, 100, 0.5f, "300");
+
+}
+
 void update() {
     process_entities(&entity_update);
     jo_sprite_draw3D(sprite_bumper_left_id, -140, 0, 100);
     jo_sprite_draw3D(sprite_bumper_right_id, 140, 0, 100);
-    
+
+
+    // Draw a shadow underneath
+    jo_sprite_enable_shadow_filter();
+    jo_sprite_draw3D(sprite_selector_id, 0, 1, 100);
+    jo_sprite_disable_shadow_filter();
+
+    jo_sprite_draw3D(sprite_selector_id, 0, 0, 100);
+
+
+    // Debugs how many selectors we can fit within the border of the list view
+    // int i;
+    // for (i = 0; i < 10; i++) {
+    //     int flip = 1;
+
+    //     if (i % 2 == 0) {
+    //         flip = -1;
+    //     }
+
+    //     int y = 10 * i * flip;
+
+    //     jo_sprite_draw3D(sprite_selector_id, 0, y, 100);
+    // }
+
+
+    draw_list();
+
     jo_printf(0, 28, "Polygon count: %d  ", jo_3d_get_polygon_count());
 }
 
@@ -100,6 +173,8 @@ void jo_main(void) {
     
     sprite_bumper_left_id  = jo_sprite_add_tga("IMAGES", "L.TGA", JO_COLOR_Green);
     sprite_bumper_right_id = jo_sprite_add_tga("IMAGES", "R.TGA", JO_COLOR_Green);
+    sprite_selector_id     = jo_sprite_add_tga("IMAGES", "SELECT.TGA", JO_COLOR_Green);
+
 
 
 
