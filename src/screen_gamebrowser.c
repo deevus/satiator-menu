@@ -11,8 +11,8 @@ const EntityArray *screen_gamebrowser_create() {
     EntityArray *entities = (EntityArray *)malloc(sizeof(EntityArray) + num_entities * sizeof(Entity));
     entities->size = num_entities;
 
-    entities->data[0] = *entity_checkerboard_create();
-    entities->data[1] = *entity_border_create();
+    entities->data[0] = entity_checkerboard_create();
+    entities->data[1] = entity_border_create();
 
     return entities;
 }

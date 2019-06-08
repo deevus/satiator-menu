@@ -11,9 +11,10 @@ typedef enum {
     CT_SPRITE     = 1 << 2,
     CT_DRAW       = 1 << 3,
     CT_FOCUS      = 1 << 4,
-    CT_BACKGROUND = 1 << 5,
+    CT_IMAGE      = 1 << 5,
     CT_TEXT       = 1 << 6,
-    CT_FOREGROUND = 1 << 7,
+    CT_FILE       = 1 << 8,
+    CT_STREAM     = 1 << 9,
 } ComponentType;
 
 typedef struct {

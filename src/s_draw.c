@@ -1,24 +1,52 @@
 #include "s_draw.h"
-#include "component.h"
-#include "c_background.h"
-#include "c_transform.h"
+
 #include <jo/jo.h>
 
-void system_draw_process(EntityArray *entities, uint16_t delta_ticks) {
-    // backgrounds
-    for (size_t i = 0; i < entities->size; i++) {
-        ComponentArray *components = entities->data[i].components;
+#include "component.h"
+#include "c_file.h"
+#include "c_image.h"
+#include "c_transform.h"
 
-        if (components->types & (CT_BACKGROUND | CT_TRANSFORM)) {
-            BackgroundComponent *background        = (BackgroundComponent *)component_find(components, CT_BACKGROUND);
+#include "bst.h"
+
+typedef struct {
+    ImageComponent *image;
+    TransformComponent *transform;
+} ImageTuple;
+
+static void draw_image_tuple(ImageTuple *tuple) {
+    jo_sprite_draw3D(
+        tuple->image->image_id,
+        tuple->transform->position.x,
+        tuple->transform->position.y,
+        tuple->transform->position.z
+    );
+}
+
+static void draw_image_tuples(tree_node_t *node) {
+    for (size_t i = 0; i < node->size; i++) {
+        draw_image_tuple((ImageTuple *)node->data[i]);
+    }
+}
+
+void system_draw_process(EntityArray *entities, uint16_t delta_ticks) {
+    tree_node_t *bst = NULL;
+
+    for (size_t i = 0; i < entities->size; i++) {
+        ComponentArray *components = entities->data[i]->components;
+
+        if (components->types & (CT_IMAGE | CT_TRANSFORM)) {
+            ImageComponent *image         = (ImageComponent *)component_find(components, CT_IMAGE);
             TransformComponent *transform = (TransformComponent *)component_find(components, CT_TRANSFORM);
 
-            jo_pos2D *position = &transform->position;
-            jo_sprite_draw3D(background->image_id, position->x, position->y, 500);
+            Position position = transform->position;
+
+            ImageTuple tuple = {image, transform};
+            bst = bst_insert(bst, position.z, &tuple);
         }
     }
 
-    // sprites
+    bst_traverse(bst, &draw_image_tuples);
 
-    // foregrounds
+    bst_free(bst);
 }

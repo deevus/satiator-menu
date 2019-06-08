@@ -11,7 +11,7 @@ typedef struct {
 
 typedef struct {
     size_t size;
-    Entity data[];
+    Entity *data[];
 } EntityArray;
 
 Entity *entity_create(ComponentArray *components);

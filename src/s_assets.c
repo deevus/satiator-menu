@@ -1,23 +1,27 @@
-#include "s_assets.h"
-#include "entity.h"
 #include <stdlib.h>
-#include "component.h"
-#include "c_background.h"
 #include <jo/jo.h>
 #include <string.h>
+
+#include "s_assets.h"
+
+#include "entity.h"
+#include "component.h"
+#include "c_image.h"
+#include "c_file.h"
 
 void system_assets_process(EntityArray *entities) {
     // backgrounds
     for (size_t i = 0; i < entities->size; i++) {
-        ComponentArray *components = entities->data[i].components;
+        ComponentArray *components = entities->data[i]->components;
 
-        if (components->types & (CT_BACKGROUND | CT_TRANSFORM)) {
-            BackgroundComponent *background = (BackgroundComponent *)component_find(components, CT_BACKGROUND);
+        if (components->types & (CT_FILE | CT_IMAGE)) {
+            FileComponent *file   = (FileComponent *)component_find(components, CT_FILE);
+            ImageComponent *image = (ImageComponent *)component_find(components, CT_IMAGE);
 
-            if (strstr(background->filename, "BIN")) {
-                background->image_id = jo_sprite_add_bin(background->directory, background->filename, background->transparent_color);
+            if (strstr(file->filename, "BIN")) {
+                image->image_id = jo_sprite_add_bin(file->directory, file->filename, image->transparent_color);
             } else {
-                background->image_id = jo_sprite_add_tga(background->directory, background->filename, background->transparent_color);
+                image->image_id = jo_sprite_add_tga(file->directory, file->filename, image->transparent_color);
             }
         }
     }

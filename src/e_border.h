@@ -3,6 +3,6 @@
 
 #include "entity.h"
 
-const Entity *entity_border_create();
+Entity *entity_border_create();
 
 #endif

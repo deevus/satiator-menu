@@ -21,8 +21,8 @@ ECSAdmin *ecs_admin_create(EntityArray *entities) {
     linkedlist_init(&components_list);
 
     for (size_t i = 0; i < entities->size; i++) {
-        Entity entity = entities->data[i];
-        ComponentArray *components = entity.components;
+        Entity *entity = entities->data[i];
+        ComponentArray *components = entity->components;
 
         for (size_t j = 0; j < components->size; j++) {
             ComponentHeader *component = components->data[j];

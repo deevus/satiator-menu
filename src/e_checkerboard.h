@@ -3,6 +3,6 @@
 
 #include "entity.h"
 
-const Entity *entity_checkerboard_create();
+Entity *entity_checkerboard_create();
 
 #endif
