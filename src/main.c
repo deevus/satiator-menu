@@ -42,6 +42,7 @@ extern linkedlist_t *event_subscribers;
 linkedlist_t *entities;
 
 static int sprite_bumper_left_id;
+static int sprite_bumper_right_id;
 
 void load() {
     entities = (linkedlist_t *)malloc(sizeof(linkedlist_t));
@@ -68,8 +69,8 @@ void startup() {
 void update() {
     process_entities(&entity_update);
     jo_sprite_draw3D(sprite_bumper_left_id, -140, 0, 100);
-    jo_sprite_draw3D(sprite_bumper_left_id, -140, 0, 100);
-    jo_sprite_draw3D_and_rotate(sprite_bumper_left_id, 140, 0, 100, 180);
+    jo_sprite_draw3D(sprite_bumper_right_id, 140, 0, 100);
+    
     jo_printf(0, 28, "Polygon count: %d  ", jo_3d_get_polygon_count());
 }
 
@@ -97,7 +98,8 @@ void jo_main(void) {
     load();
     startup();
     
-    sprite_bumper_left_id = jo_sprite_add_tga("IMAGES", "L.TGA", JO_COLOR_Green);
+    sprite_bumper_left_id  = jo_sprite_add_tga("IMAGES", "L.TGA", JO_COLOR_Green);
+    sprite_bumper_right_id = jo_sprite_add_tga("IMAGES", "R.TGA", JO_COLOR_Green);
 
 
 
