@@ -36,14 +36,22 @@
 #include "message_type.h"
 
 #define IMAGE_DIR "IMAGES"
+#define FONT_DIR  "FONTS"
 
 extern linkedlist_t *event_subscribers;
 
 linkedlist_t *entities;
 
+// Assets
 static int sprite_bumper_left_id;
 static int sprite_bumper_right_id;
 static int sprite_selector_id;
+static int sprite_divider_id;
+
+// Fonts
+static jo_font * FONT_MOS_WHT; 
+// static jo_font * FONT_MOS_BLK;
+// static jo_font * FONT_MOS_DGY;
 
 void load() {
     entities = (linkedlist_t *)malloc(sizeof(linkedlist_t));
@@ -84,12 +92,29 @@ void draw_list() {
     };
 
 
-    int i;
-    for (i = 0; i < 10; i++) {
-        jo_printf(12, (2 * (i * 1)) + 10, game_titles[i]);
-        jo_printf(18, (2 * (i * 1)) + 10, 300);
-    }
+    // int i;
+    // for (i = 0; i < 10; i++) {
+    //     int y_offset = (2 * (i * 1)) + 10;
 
+    //     jo_printf(12, y_offset, game_titles[i]);
+
+    // }
+
+    // int i;
+    // int vertical_offset_step   = 20;
+    // int vertical_offset_origin = -80;
+    // int y_offset;
+
+    // for (i = 0; i < 10; i++) {
+    //     y_offset = vertical_offset_origin + (i * vertical_offset_step);
+
+    //     // jo_sprite_draw3D(sprite_selector_id, 0, y, 100);
+
+    //     jo_font_printf_centered(FONT_MOS_WHT, 0, y_offset, 1.0f, game_titles[i]);
+    //     jo_font_printf_centered(FONT_MOS_WHT, 0, y_offset, 1.0f, "300");
+    // }
+
+    // Static games list
     // jo_font_printf_centered(FONT_LIST_WHT, 0, -80, 0.5f, "Astal");
     // jo_font_printf_centered(FONT_LIST_WHT, 125, -80, 0.5f, "300");
     // jo_font_printf_centered(FONT_LIST_WHT, 0, -60, 0.5f, "Baku Baku");
@@ -98,27 +123,39 @@ void draw_list() {
     // jo_font_printf_centered(FONT_LIST_WHT, 125, -40, 0.5f, "300");
     // jo_font_printf_centered(FONT_LIST_WHT, 0, -20, 0.5f, "Burning Rangers");
     // jo_font_printf_centered(FONT_LIST_WHT, 125, -20, 0.5f, "300");
-    // jo_font_printf_centered(FONT_LIST_WHT, 0, -0, 0.5f, "Dark Savior");
-    // jo_font_printf_centered(FONT_LIST_WHT, 125, -0, 0.5f, "300");
-    // jo_font_printf_centered(FONT_LIST_WHT, 0, 20, 0.5f, "Daytona USA CCE");
-    // jo_font_printf_centered(FONT_LIST_WHT, 125, 20, 0.5f, "300");
-    // jo_font_printf_centered(FONT_LIST_WHT, 0, 40, 0.5f, "Deep Fear");
-    // jo_font_printf_centered(FONT_LIST_WHT, 125, 40, 0.5f, "300");
-    // jo_font_printf_centered(FONT_LIST_WHT, 0, 60, 0.5f, "Dragon Force");
-    // jo_font_printf_centered(FONT_LIST_WHT, 125, 60, 0.5f, "300");
-    // jo_font_printf_centered(FONT_LIST_WHT, 0, 80, 0.5f, "Grandia");
-    // jo_font_printf_centered(FONT_LIST_WHT, 125, 80, 0.5f, "300");
-    // jo_font_printf_centered(FONT_LIST_WHT, 0, 100, 0.5f, "Gungriffon");
-    // jo_font_printf_centered(FONT_LIST_WHT, 125, 100, 0.5f, "300");
 
+    // Handles characters from first line of mapping
+    jo_font_printf_centered(FONT_MOS_WHT, 0, 0, 1.0f, "! !\"#$%&`()*+,_./&!");
+
+    // Second line
+    // jo_font_printf_centered(FONT_MOS_WHT, 0, 10, 1.0f, "0123456789:;<=>?");
+
+    // Third line
+    // jo_font_printf_centered(FONT_MOS_WHT, 0, 10, 1.0f, "@ABCDEFGHIJKLMNO");
+
+    // Fourth line
+    // jo_font_printf_centered(FONT_MOS_WHT, 0, 15, 1.0f, "PQRSTUVWXYZ[\\]^_");
+
+
+    // Draw dividers
+    // jo_sprite_draw3D(sprite_divider_id, 0, -70, 150);
+    // jo_sprite_draw3D(sprite_divider_id, 0, -50, 150);
+    // jo_sprite_draw3D(sprite_divider_id, 0, -30, 150);
+    // jo_sprite_draw3D(sprite_divider_id, 0, -10, 150);
+    // jo_sprite_draw3D(sprite_divider_id, 0, 10, 150);
+    // jo_sprite_draw3D(sprite_divider_id, 0, 30, 150);
+    // jo_sprite_draw3D(sprite_divider_id, 0, 50, 150);
+    // jo_sprite_draw3D(sprite_divider_id, 0, 70, 150);
 }
 
 void update() {
+
     process_entities(&entity_update);
     jo_sprite_draw3D(sprite_bumper_left_id, -140, 0, 100);
     jo_sprite_draw3D(sprite_bumper_right_id, 140, 0, 100);
 
 
+    // Draw selection sprite
     // Draw a shadow underneath
     jo_sprite_enable_shadow_filter();
     jo_sprite_draw3D(sprite_selector_id, 0, 1, 100);
@@ -127,22 +164,8 @@ void update() {
     jo_sprite_draw3D(sprite_selector_id, 0, 0, 100);
 
 
-    // Debugs how many selectors we can fit within the border of the list view
-    // int i;
-    // for (i = 0; i < 10; i++) {
-    //     int flip = 1;
-
-    //     if (i % 2 == 0) {
-    //         flip = -1;
-    //     }
-
-    //     int y = 10 * i * flip;
-
-    //     jo_sprite_draw3D(sprite_selector_id, 0, y, 100);
-    // }
-
-
     draw_list();
+    
 
     jo_printf(0, 28, "Polygon count: %d  ", jo_3d_get_polygon_count());
 }
@@ -165,18 +188,28 @@ void input() {
     message_event_dispatch(message);
 }
 
+void load_new_fonts() {
+    FONT_MOS_WHT = jo_font_load("FONTS", "MOSWHT.TGA", JO_COLOR_Green, 16, 32, 0, 
+        " !\"#$%&`()*+,_./\n0123456789:;<=>?\n@ABCDEFGHIJKLMNO\nPQRSTUVWXYZ[\\]^_\n\'abcdefghijklmno\npqrstuvwxyz{|}~"
+    );
+}
+
+void load_new_assets() {
+    load_new_fonts();
+
+    sprite_bumper_left_id  = jo_sprite_add_tga("IMAGES", "L.TGA", JO_COLOR_Green);
+    sprite_bumper_right_id = jo_sprite_add_tga("IMAGES", "R.TGA", JO_COLOR_Green);
+    sprite_selector_id     = jo_sprite_add_tga("IMAGES", "SELECT.TGA", JO_COLOR_Green);
+    sprite_divider_id      = jo_sprite_add_tga("IMAGES", "DIVIDER.TGA", JO_COLOR_Green);
+}
+
 void jo_main(void) {
     jo_core_init(JO_COLOR_RGB(12, 13, 15));
 
     load();
+    load_new_assets();
+
     startup();
-    
-    sprite_bumper_left_id  = jo_sprite_add_tga("IMAGES", "L.TGA", JO_COLOR_Green);
-    sprite_bumper_right_id = jo_sprite_add_tga("IMAGES", "R.TGA", JO_COLOR_Green);
-    sprite_selector_id     = jo_sprite_add_tga("IMAGES", "SELECT.TGA", JO_COLOR_Green);
-
-
-
 
     jo_core_add_callback(input);
     jo_core_add_callback(update);
