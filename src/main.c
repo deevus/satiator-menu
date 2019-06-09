@@ -101,19 +101,19 @@ void draw_list() {
 
     // }
 
-    // int i;
-    // int vertical_offset_step   = 20;
-    // int vertical_offset_origin = -80;
-    // int y_offset;
+    int i;
+    int vertical_offset_step   = 20;
+    int vertical_offset_origin = -80;
+    int y_offset;
 
-    // for (i = 0; i < 10; i++) {
-    //     y_offset = vertical_offset_origin + (i * vertical_offset_step);
+    for (i = 0; i < 10; i++) {
+        y_offset = vertical_offset_origin + (i * vertical_offset_step);
 
-    //     // jo_sprite_draw3D(sprite_selector_id, 0, y, 100);
+        // jo_sprite_draw3D(sprite_selector_id, 0, y, 100);
 
-    //     jo_font_printf_centered(FONT_MOS_WHT, 0, y_offset, 1.0f, game_titles[i]);
-    //     jo_font_printf_centered(FONT_MOS_WHT, 0, y_offset, 1.0f, "300");
-    // }
+        jo_font_printf_centered(FONT_MOS_WHT, 0, y_offset, 0.5f, game_titles[i]);
+        jo_font_printf_centered(FONT_MOS_WHT, 110, y_offset, 0.25f, "300");
+    }
 
     // Static games list
     // jo_font_printf_centered(FONT_LIST_WHT, 0, -80, 0.5f, "Astal");
@@ -126,13 +126,13 @@ void draw_list() {
     // jo_font_printf_centered(FONT_LIST_WHT, 125, -20, 0.5f, "300");
 
     // Handles characters from first line of mapping
-    jo_font_printf_centered(FONT_MOS_WHT, 0, -40, 1.0f, "@ABCDEFGHIJKLMNO");
+    // jo_font_printf_centered(FONT_MOS_WHT, 0, -40, 1.0f, "@ABCDEFGHIJKLMNO");
 
     // Demo font full mapping
-    jo_font_printf_centered(FONT, 0, 0, 1.0f, "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ!\"?=%&’,.()*+-/");
+    // jo_font_printf_centered(FONT, 0, 0, 1.0f, "?=%&’,.()*+-/");
 
-    // Example from the sample
-    jo_font_printf_centered(FONT, 0, 40, 1.0f, "SCORE = %d",  42);
+    // Example from the sample  
+    // jo_font_printf_centered(FONT, 0, 40, 1.0f, "SCORE = %d",  42);
 
     // Second line
     // jo_font_printf_centered(FONT_MOS_WHT, 0, -40, 1.0f, "0123456789:;<=>?");
@@ -148,21 +148,20 @@ void draw_list() {
     // jo_font_printf_centered(FONT_MOS_WHT, 0, 120, 1.0f, "pqrstuvwxyz");
 
     // Draw dividers
-    // jo_sprite_draw3D(sprite_divider_id, 0, -70, 150);
-    // jo_sprite_draw3D(sprite_divider_id, 0, -50, 150);
-    // jo_sprite_draw3D(sprite_divider_id, 0, -30, 150);
-    // jo_sprite_draw3D(sprite_divider_id, 0, -10, 150);
-    // jo_sprite_draw3D(sprite_divider_id, 0, 10, 150);
-    // jo_sprite_draw3D(sprite_divider_id, 0, 30, 150);
-    // jo_sprite_draw3D(sprite_divider_id, 0, 50, 150);
-    // jo_sprite_draw3D(sprite_divider_id, 0, 70, 150);
+    jo_sprite_draw3D(sprite_divider_id, 0, -70, 150);
+    jo_sprite_draw3D(sprite_divider_id, 0, -50, 150);
+    jo_sprite_draw3D(sprite_divider_id, 0, -30, 150);
+    jo_sprite_draw3D(sprite_divider_id, 0, -10, 150);
+    jo_sprite_draw3D(sprite_divider_id, 0, 10, 150);
+    jo_sprite_draw3D(sprite_divider_id, 0, 30, 150);
+    jo_sprite_draw3D(sprite_divider_id, 0, 50, 150);
+    jo_sprite_draw3D(sprite_divider_id, 0, 70, 150);
+    jo_sprite_draw3D(sprite_divider_id, 0, 90, 150);
 }
 
 void update() {
 
     process_entities(&entity_update);
-    jo_sprite_draw3D(sprite_bumper_left_id, -140, 0, 100);
-    jo_sprite_draw3D(sprite_bumper_right_id, 140, 0, 100);
 
 
     // Draw selection sprite
@@ -176,6 +175,12 @@ void update() {
 
     draw_list();
     
+
+
+    jo_sprite_change_sprite_scale(0.5f);
+    jo_sprite_draw3D(sprite_bumper_left_id, -140, 0, 100);
+    jo_sprite_draw3D(sprite_bumper_right_id, 140, 0, 100);
+    jo_sprite_change_sprite_scale(1.0f);
 
     jo_printf(0, 28, "Polygon count: %d  ", jo_3d_get_polygon_count());
 }
@@ -198,12 +203,15 @@ void input() {
     message_event_dispatch(message);
 }
 
+// TODO - For some reason font load order makes a difference to how they show up when being used...
 void load_new_fonts() {
+    
+    // Sample font
+    // FONT = jo_font_load("FONTS", "FONT.TGA", JO_COLOR_Green, 8, 8, 2, "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ!\"?=%&',.()*+-/");
+    
     FONT_MOS_WHT = jo_font_load("FONTS", "MOSWHT.TGA", JO_COLOR_Green, 16, 32, 0, 
         " !\"#$%&`()*+,_./\n0123456789:;<=>?\n@ABCDEFGHIJKLMNO\nPQRSTUVWXYZ[\\]^_\n\'abcdefghijklmno\npqrstuvwxyz{|}~¢"
     );
-
-    FONT = jo_font_load("FONTS", "FONT.TGA", JO_COLOR_Green, 8, 8, 2, "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ!\"?=%&',.()*+-/");
 }
 
 void load_new_assets() {
