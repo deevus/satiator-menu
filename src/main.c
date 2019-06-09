@@ -50,6 +50,7 @@ static int sprite_divider_id;
 
 // Fonts
 static jo_font * FONT_MOS_WHT; 
+static jo_font * FONT;
 // static jo_font * FONT_MOS_BLK;
 // static jo_font * FONT_MOS_DGY;
 
@@ -125,17 +126,21 @@ void draw_list() {
     // jo_font_printf_centered(FONT_LIST_WHT, 125, -20, 0.5f, "300");
 
     // Handles characters from first line of mapping
-    jo_font_printf_centered(FONT_MOS_WHT, 0, 0, 1.0f, "! !\"#$%&`()*+,_./&!");
+    // jo_font_printf_centered(FONT_MOS_WHT, 0, -80, 1.0f, "! !\"#$%&`()*+,_./&!");
+    jo_font_printf_centered(FONT, 0, 0, 1.0f, "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ!\"?=%&’,.()*+-/");
 
     // Second line
-    // jo_font_printf_centered(FONT_MOS_WHT, 0, 10, 1.0f, "0123456789:;<=>?");
+    // jo_font_printf_centered(FONT_MOS_WHT, 0, -40, 1.0f, "0123456789:;<=>?");
 
     // Third line
-    // jo_font_printf_centered(FONT_MOS_WHT, 0, 10, 1.0f, "@ABCDEFGHIJKLMNO");
+    // jo_font_printf_centered(FONT_MOS_WHT, 0, 0, 1.0f, "@ABCDEFGHIJKLMNO");
 
     // Fourth line
-    // jo_font_printf_centered(FONT_MOS_WHT, 0, 15, 1.0f, "PQRSTUVWXYZ[\\]^_");
+    // jo_font_printf_centered(FONT_MOS_WHT, 0, 40, 1.0f, "PQRSTUVWXYZ[\\]^_");
 
+
+    // jo_font_printf_centered(FONT_MOS_WHT, 0, 80, 1.0f, "abcdefghijklmno");
+    // jo_font_printf_centered(FONT_MOS_WHT, 0, 120, 1.0f, "pqrstuvwxyz");
 
     // Draw dividers
     // jo_sprite_draw3D(sprite_divider_id, 0, -70, 150);
@@ -190,7 +195,11 @@ void input() {
 
 void load_new_fonts() {
     FONT_MOS_WHT = jo_font_load("FONTS", "MOSWHT.TGA", JO_COLOR_Green, 16, 32, 0, 
-        " !\"#$%&`()*+,_./\n0123456789:;<=>?\n@ABCDEFGHIJKLMNO\nPQRSTUVWXYZ[\\]^_\n\'abcdefghijklmno\npqrstuvwxyz{|}~"
+        " !\"#$%&`()*+,_./\n0123456789:;<=>?\n@ABCDEFGHIJKLMNO\nPQRSTUVWXYZ[\\]^_\n\'abcdefghijklmno\npqrstuvwxyz{|}~¢"
+    );
+
+    FONT = jo_font_load("FONTS", "FONT.TGA", JO_COLOR_Green, 8, 8, 2, 
+        "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ!\"?=%&’,.()*+-/"
     );
 }
 
