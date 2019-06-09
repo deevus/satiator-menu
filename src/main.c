@@ -126,8 +126,13 @@ void draw_list() {
     // jo_font_printf_centered(FONT_LIST_WHT, 125, -20, 0.5f, "300");
 
     // Handles characters from first line of mapping
-    // jo_font_printf_centered(FONT_MOS_WHT, 0, -80, 1.0f, "! !\"#$%&`()*+,_./&!");
+    jo_font_printf_centered(FONT_MOS_WHT, 0, -40, 1.0f, "@ABCDEFGHIJKLMNO");
+
+    // Demo font full mapping
     jo_font_printf_centered(FONT, 0, 0, 1.0f, "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ!\"?=%&’,.()*+-/");
+
+    // Example from the sample
+    jo_font_printf_centered(FONT, 0, 40, 1.0f, "SCORE = %d",  42);
 
     // Second line
     // jo_font_printf_centered(FONT_MOS_WHT, 0, -40, 1.0f, "0123456789:;<=>?");
@@ -198,9 +203,7 @@ void load_new_fonts() {
         " !\"#$%&`()*+,_./\n0123456789:;<=>?\n@ABCDEFGHIJKLMNO\nPQRSTUVWXYZ[\\]^_\n\'abcdefghijklmno\npqrstuvwxyz{|}~¢"
     );
 
-    FONT = jo_font_load("FONTS", "FONT.TGA", JO_COLOR_Green, 8, 8, 2, 
-        "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ!\"?=%&’,.()*+-/"
-    );
+    FONT = jo_font_load("FONTS", "FONT.TGA", JO_COLOR_Green, 8, 8, 2, "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ!\"?=%&',.()*+-/");
 }
 
 void load_new_assets() {
