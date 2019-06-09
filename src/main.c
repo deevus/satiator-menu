@@ -50,9 +50,8 @@ static int sprite_divider_id;
 
 // Fonts
 static jo_font * FONT_MOS_WHT; 
-static jo_font * FONT;
+// static jo_font * FONT_MOS_DKG;
 // static jo_font * FONT_MOS_BLK;
-// static jo_font * FONT_MOS_DGY;
 
 void load() {
     entities = (linkedlist_t *)malloc(sizeof(linkedlist_t));
@@ -92,15 +91,6 @@ void draw_list() {
         "Gungriffon"
     };
 
-
-    // int i;
-    // for (i = 0; i < 10; i++) {
-    //     int y_offset = (2 * (i * 1)) + 10;
-
-    //     jo_printf(12, y_offset, game_titles[i]);
-
-    // }
-
     int i;
     int vertical_offset_step   = 20;
     int vertical_offset_origin = -80;
@@ -109,43 +99,11 @@ void draw_list() {
     for (i = 0; i < 10; i++) {
         y_offset = vertical_offset_origin + (i * vertical_offset_step);
 
-        // jo_sprite_draw3D(sprite_selector_id, 0, y, 100);
 
-        jo_font_printf_centered(FONT_MOS_WHT, 0, y_offset, 0.5f, game_titles[i]);
-        jo_font_printf_centered(FONT_MOS_WHT, 110, y_offset, 0.25f, "300");
+        jo_font_printf_centered(FONT_MOS_WHT, 0, y_offset, 0.5f, game_titles[i]);    
+        jo_font_printf_centered(FONT_MOS_WHT, 110, y_offset, 0.25f, "3 0 0");
+    
     }
-
-    // Static games list
-    // jo_font_printf_centered(FONT_LIST_WHT, 0, -80, 0.5f, "Astal");
-    // jo_font_printf_centered(FONT_LIST_WHT, 125, -80, 0.5f, "300");
-    // jo_font_printf_centered(FONT_LIST_WHT, 0, -60, 0.5f, "Baku Baku");
-    // jo_font_printf_centered(FONT_LIST_WHT, 125, -60, 0.5f, "300");
-    // jo_font_printf_centered(FONT_LIST_WHT, 0, -40, 0.5f, "Bug");
-    // jo_font_printf_centered(FONT_LIST_WHT, 125, -40, 0.5f, "300");
-    // jo_font_printf_centered(FONT_LIST_WHT, 0, -20, 0.5f, "Burning Rangers");
-    // jo_font_printf_centered(FONT_LIST_WHT, 125, -20, 0.5f, "300");
-
-    // Handles characters from first line of mapping
-    // jo_font_printf_centered(FONT_MOS_WHT, 0, -40, 1.0f, "@ABCDEFGHIJKLMNO");
-
-    // Demo font full mapping
-    // jo_font_printf_centered(FONT, 0, 0, 1.0f, "?=%&’,.()*+-/");
-
-    // Example from the sample  
-    // jo_font_printf_centered(FONT, 0, 40, 1.0f, "SCORE = %d",  42);
-
-    // Second line
-    // jo_font_printf_centered(FONT_MOS_WHT, 0, -40, 1.0f, "0123456789:;<=>?");
-
-    // Third line
-    // jo_font_printf_centered(FONT_MOS_WHT, 0, 0, 1.0f, "@ABCDEFGHIJKLMNO");
-
-    // Fourth line
-    // jo_font_printf_centered(FONT_MOS_WHT, 0, 40, 1.0f, "PQRSTUVWXYZ[\\]^_");
-
-
-    // jo_font_printf_centered(FONT_MOS_WHT, 0, 80, 1.0f, "abcdefghijklmno");
-    // jo_font_printf_centered(FONT_MOS_WHT, 0, 120, 1.0f, "pqrstuvwxyz");
 
     // Draw dividers
     jo_sprite_draw3D(sprite_divider_id, 0, -70, 150);
@@ -159,12 +117,19 @@ void draw_list() {
     jo_sprite_draw3D(sprite_divider_id, 0, 90, 150);
 }
 
+void draw_window_text() {
+    jo_font_printf(FONT_MOS_WHT, 200, -5, 0.25f, "Page 1 / 10");
+}
+
 void update() {
 
+    // View components
     process_entities(&entity_update);
 
 
-    // Draw selection sprite
+    draw_window_text();
+
+    // Selector
     // Draw a shadow underneath
     jo_sprite_enable_shadow_filter();
     jo_sprite_draw3D(sprite_selector_id, 0, 1, 100);
@@ -172,17 +137,17 @@ void update() {
 
     jo_sprite_draw3D(sprite_selector_id, 0, 0, 100);
 
-
+    // Game list
     draw_list();
-    
 
-
+    // Bumpers    
     jo_sprite_change_sprite_scale(0.5f);
     jo_sprite_draw3D(sprite_bumper_left_id, -140, 0, 100);
     jo_sprite_draw3D(sprite_bumper_right_id, 140, 0, 100);
     jo_sprite_change_sprite_scale(1.0f);
 
-    jo_printf(0, 28, "Polygon count: %d  ", jo_3d_get_polygon_count());
+    jo_printf(0, 26, "Polygon count: %d  ", jo_3d_get_polygon_count());
+    jo_printf(0, 28, "Sprite memory usage: %d%  ", jo_sprite_usage_percent());
 }
 
 
@@ -205,13 +170,13 @@ void input() {
 
 // TODO - For some reason font load order makes a difference to how they show up when being used...
 void load_new_fonts() {
-    
-    // Sample font
-    // FONT = jo_font_load("FONTS", "FONT.TGA", JO_COLOR_Green, 8, 8, 2, "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ!\"?=%&',.()*+-/");
-    
-    FONT_MOS_WHT = jo_font_load("FONTS", "MOSWHT.TGA", JO_COLOR_Green, 16, 32, 0, 
+    FONT_MOS_WHT = jo_font_load(FONT_DIR, "MOSWHT.TGA", JO_COLOR_Green, 16, 32, 0, 
         " !\"#$%&`()*+,_./\n0123456789:;<=>?\n@ABCDEFGHIJKLMNO\nPQRSTUVWXYZ[\\]^_\n\'abcdefghijklmno\npqrstuvwxyz{|}~¢"
     );
+
+    // FONT_MOS_DKG = jo_font_load(FONT_DIR, "MOSDKG.TGA", JO_COLOR_Green, 16, 32, 8, 
+    //     " !\"#$%&`()*+,_./\n0123456789:;<=>?\n@ABCDEFGHIJKLMNO\nPQRSTUVWXYZ[\\]^_\n\'abcdefghijklmno\npqrstuvwxyz{|}~¢"
+    // );
 }
 
 void load_new_assets() {
