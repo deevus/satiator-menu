@@ -6,8 +6,10 @@
 #include "c_file.h"
 #include "c_image.h"
 #include "c_transform.h"
+#include "c_text.h"
 
 #include "bst.h"
+#include "font.h"
 
 typedef struct {
     ImageComponent *image;
@@ -29,13 +31,13 @@ static void draw_image_tuples(tree_node_t *node) {
     }
 }
 
-void system_draw_process(EntityArray *entities, uint16_t delta_ticks) {
+void system_draw_process(EntityArray *entities, FontArray *fonts, uint16_t delta_ticks) {
     tree_node_t *bst = NULL;
 
     for (size_t i = 0; i < entities->size; i++) {
         ComponentArray *components = entities->data[i]->components;
 
-        if (components->types & (CT_IMAGE | CT_TRANSFORM)) {
+        if ((components->types & (CT_IMAGE | CT_TRANSFORM)) == (CT_IMAGE | CT_TRANSFORM)) {
             ImageComponent *image         = (ImageComponent *)component_find(components, CT_IMAGE);
             TransformComponent *transform = (TransformComponent *)component_find(components, CT_TRANSFORM);
 
@@ -43,6 +45,20 @@ void system_draw_process(EntityArray *entities, uint16_t delta_ticks) {
 
             ImageTuple tuple = {image, transform};
             bst = bst_insert(bst, position.z, &tuple);
+        }
+
+        if ((components->types & (CT_TEXT | CT_TRANSFORM)) == (CT_TEXT | CT_TRANSFORM)) {
+            TextComponent *text           = (TextComponent *)component_find(components, CT_TEXT);
+            TransformComponent *transform = (TransformComponent *)component_find(components, CT_TRANSFORM);
+
+            Position position = transform->position;
+            jo_font *font = font_get(fonts, text->font_type);
+
+            if (text->centered) {
+                jo_font_print_centered(font, position.x, position.y, text->scale, text->value);
+            } else {
+                jo_font_print(font, position.x, position.y, text->scale, text->value);
+            }
         }
     }
 

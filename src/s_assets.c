@@ -3,17 +3,19 @@
 #include <string.h>
 
 #include "s_assets.h"
+#include "s_font.h"
 
 #include "entity.h"
 #include "component.h"
 #include "c_image.h"
 #include "c_file.h"
+#include "c_text.h"
 
 void system_assets_process(EntityArray *entities) {
-    // backgrounds
     for (size_t i = 0; i < entities->size; i++) {
         ComponentArray *components = entities->data[i]->components;
 
+        // backgrounds
         if (components->types & (CT_FILE | CT_IMAGE)) {
             FileComponent *file   = (FileComponent *)component_find(components, CT_FILE);
             ImageComponent *image = (ImageComponent *)component_find(components, CT_IMAGE);

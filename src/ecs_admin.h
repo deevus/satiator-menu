@@ -2,12 +2,16 @@
 #define __ECS_ADMIN_H
 
 #include <stdint.h>
+#include <jo/jo.h>
+
 #include "entity.h"
 #include "component.h"
+#include "font.h"
 
 typedef struct {
     EntityArray *entities;
     ComponentArray *components;
+    FontArray *fonts;
 } ECSAdmin;
 
 ECSAdmin *ecs_admin_create();

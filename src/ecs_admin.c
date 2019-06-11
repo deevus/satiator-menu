@@ -1,10 +1,14 @@
 #include "ecs_admin.h"
+
 #include <stdlib.h>
-#include "screen_gamebrowser.h"
-#include "linkedlist.h"
 #include <jo/jo.h>
 #include <stdint.h>
 
+#include "screen_gamebrowser.h"
+#include "linkedlist.h"
+#include "font.h"
+
+#include "s_font.h"
 #include "s_assets.h"
 #include "s_input.h"
 #include "s_draw.h"
@@ -55,6 +59,8 @@ ECSAdmin *ecs_admin_create(EntityArray *entities) {
 
     admin->components = components;
 
+    admin->fonts = system_font_init();
+
     return admin;
 }
 
@@ -71,7 +77,7 @@ void ecs_admin_update(ECSAdmin *admin) {
     EntityArray *entities = admin->entities;
 
     system_input_process(entities, delta_ticks);
-    system_draw_process(entities, delta_ticks);
+    system_draw_process(entities, admin->fonts, delta_ticks);
 }
 
 void ecs_admin_free(ECSAdmin *admin) {
