@@ -10,7 +10,6 @@
 
 typedef struct {
     EntityArray *entities;
-    ComponentArray *components;
     FontArray *fonts;
 } ECSAdmin;
 

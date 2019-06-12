@@ -18,47 +18,7 @@ ECSAdmin *ecs_admin_create(EntityArray *entities) {
     ECSAdmin *admin = (ECSAdmin *)malloc(sizeof(ECSAdmin));
 
     admin->entities = entities;
-
-    ComponentType types = 0;
-    linkedlist_t components_list;
-    linkedlist_init(&components_list);
-
-    for (size_t i = 0; i < entities->size; i++) {
-        Entity *entity = entities->data[i];
-        ComponentArray *components = entity->components;
-
-        for (size_t j = 0; j < components->size; j++) {
-            ComponentHeader *component = components->data[j];
-
-            if (component->singleton) {
-                if ((types & component->type) == 0) {
-                    linkedlist_insert(&components_list, component);
-                }
-            } else {
-                linkedlist_insert(&components_list, component);
-            }
-
-            types |= component->type;
-        }
-    }
-
-    ComponentArray *components = (ComponentArray *)malloc(sizeof(ComponentArray) + components_list.size * sizeof(ComponentHeader *));
-    components->size  = components_list.size;
-    components->types = types;
-
-    int i = 0;
-    const node_t *current = linkedlist_gethead(&components_list);
-
-    while (current) {
-        components->data[i] = (ComponentHeader *)current->data;
-
-        current = linkedlist_next(&components_list, current);
-        i++;
-    }
-
-    admin->components = components;
-
-    admin->fonts = system_font_init();
+    admin->fonts    = system_font_init();
 
     return admin;
 }
