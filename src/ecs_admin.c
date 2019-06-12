@@ -4,7 +4,6 @@
 #include <jo/jo.h>
 #include <stdint.h>
 
-#include "screen_gamebrowser.h"
 #include "linkedlist.h"
 #include "font.h"
 

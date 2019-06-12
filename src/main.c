@@ -27,13 +27,10 @@
 */
 
 #include <jo/jo.h>
-#include "entity.h"
-#include "screen_gamebrowser.h"
 #include <stdlib.h>
-#include <signal.h>
+
 #include "ecs_admin.h"
-#include "s_assets.h"
-#include "s_draw.h"
+#include "satiator_menu.h"
 
 static ECSAdmin *admin;
 
@@ -46,7 +43,7 @@ void update() {
 void jo_main(void) {
     jo_core_init(JO_COLOR_RGB(12, 13, 15));
 
-    admin = ecs_admin_create(screen_gamebrowser_create());
+    admin = ecs_admin_create(satiator_menu_create());
 
     update_callback = jo_core_add_callback(update);
 
