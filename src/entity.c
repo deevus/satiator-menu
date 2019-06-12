@@ -3,6 +3,8 @@
 #include <string.h>
 #include <jo/jo.h>
 
+#include "ecs_admin.h"
+
 uint16_t next_entity_id = 0;
 
 static void entity_init(Entity *entity, ComponentArray *components) {

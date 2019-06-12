@@ -32,7 +32,7 @@
 #include "ecs_admin.h"
 #include "satiator_menu.h"
 
-static ECSAdmin *admin;
+ECSAdmin *admin;
 
 static uint16_t update_callback;
 
