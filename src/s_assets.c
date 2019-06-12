@@ -20,7 +20,7 @@ void system_assets_process(EntityArray *entities) {
             FileComponent *file   = (FileComponent *)component_find(components, CT_FILE);
             ImageComponent *image = (ImageComponent *)component_find(components, CT_IMAGE);
 
-            if (strstr(file->filename, "BIN")) {
+            if (jo_endwith(file->filename, ".BIN")) {
                 image->image_id = jo_sprite_add_bin(file->directory, file->filename, image->transparent_color);
             } else {
                 image->image_id = jo_sprite_add_tga(file->directory, file->filename, image->transparent_color);
