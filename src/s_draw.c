@@ -35,10 +35,12 @@ static void draw_image_tuples(tree_node_t *node) {
 void system_draw_process(linkedlist_t *entities, FontArray *fonts, uint16_t delta_ticks) {
     tree_node_t *bst = NULL;
 
-    const node_t *current = linkedlist_gethead(entities);
+    const node_t *current = NULL;
     for (size_t i = 0; i < entities->size; i++) {
-        if (i > 0) {
-            current = current->nextptr;
+        if (i == 0) {
+            current = linkedlist_gethead(entities);
+        } else {
+            current = linkedlist_next(entities, current);
         }
 
         Entity *entity = (Entity *)current->data;
