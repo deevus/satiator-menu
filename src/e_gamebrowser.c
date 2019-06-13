@@ -16,8 +16,8 @@ Entity *entity_gamebrowser_create(Entity *parent) {
 
     Position position = {0, 0, 0};
     components->data[GBC_TRANSFORM] = (ComponentHeader *)component_transform_create(position);
-    components->data[GBC_HELLO] = (ComponentHeader *)component_text_create("Game Browser", FT_MOSWHT, true, 1.0f);
-    components->data[GBC_PARENT] = (ComponentHeader *)component_parent_entity_create(parent);
+    components->data[GBC_HELLO]     = (ComponentHeader *)component_text_create("Game Browser", FT_MOSWHT, 1.0f, TCF_CENTERED);
+    components->data[GBC_PARENT]    = (ComponentHeader *)component_parent_entity_create(parent);
 
     return entity_create(components);
 }

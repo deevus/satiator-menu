@@ -8,6 +8,6 @@
 #include "c_text.h"
 #include "font.h"
 
-Entity *entity_text_create(char *value, FontType font_type, bool centered, float scale, uint16_t x, uint16_t y);
+Entity *entity_text_create(char *value, FontType font_type, float scale, TextComponentFlags flags, uint16_t x, uint16_t y);
 
 #endif

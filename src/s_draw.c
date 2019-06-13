@@ -1,6 +1,7 @@
 #include "s_draw.h"
 
 #include <jo/jo.h>
+#include <stdlib.h>
 
 #include "component.h"
 #include "c_file.h"
@@ -60,7 +61,7 @@ void system_draw_process(linkedlist_t *entities, FontArray *fonts, uint16_t delt
             Position position = transform->position;
             jo_font *font = font_get(fonts, text->font_type);
 
-            if (text->centered) {
+            if (text->flags & TCF_CENTERED) {
                 jo_font_print_centered(font, position.x, position.y, text->scale, text->value);
             } else {
                 jo_font_print(font, position.x, position.y, text->scale, text->value);
