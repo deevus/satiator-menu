@@ -11,9 +11,16 @@
 #include "c_file.h"
 #include "c_text.h"
 
-void system_assets_process(EntityArray *entities) {
+void system_assets_process(linkedlist_t *entities) {
+    const node_t *current = linkedlist_gethead(entities);
+
     for (size_t i = 0; i < entities->size; i++) {
-        ComponentArray *components = entities->data[i]->components;
+        if (i > 0) {
+            current = current->nextptr;
+        }
+
+        Entity *entity             = (Entity *)current->data;
+        ComponentArray *components = entity->components;
 
         // backgrounds
         if (components->types & (CT_FILE | CT_IMAGE)) {

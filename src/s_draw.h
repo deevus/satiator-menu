@@ -5,7 +5,8 @@
 
 #include "entity.h"
 #include "font.h"
+#include "linkedlist.h"
 
-void system_draw_process(EntityArray *entities, FontArray *fonts, const uint16_t delta_time);
+void system_draw_process(linkedlist_t *entities, FontArray *fonts, const uint16_t delta_time);
 
 #endif

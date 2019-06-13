@@ -3,10 +3,11 @@
 
 #include "node.h"
 #include <stdbool.h>
+#include <stdlib.h>
 
 typedef struct {
     node_t sentinel;
-    int size;
+    size_t size;
     bool circular;
 } linkedlist_t;
 

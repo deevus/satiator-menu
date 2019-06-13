@@ -31,11 +31,17 @@ static void draw_image_tuples(tree_node_t *node) {
     }
 }
 
-void system_draw_process(EntityArray *entities, FontArray *fonts, uint16_t delta_ticks) {
+void system_draw_process(linkedlist_t *entities, FontArray *fonts, uint16_t delta_ticks) {
     tree_node_t *bst = NULL;
 
+    const node_t *current = linkedlist_gethead(entities);
     for (size_t i = 0; i < entities->size; i++) {
-        ComponentArray *components = entities->data[i]->components;
+        if (i > 0) {
+            current = current->nextptr;
+        }
+
+        Entity *entity = (Entity *)current->data;
+        ComponentArray *components = entity->components;
 
         if ((components->types & (CT_IMAGE | CT_TRANSFORM)) == (CT_IMAGE | CT_TRANSFORM)) {
             ImageComponent *image         = (ImageComponent *)component_find(components, CT_IMAGE);
